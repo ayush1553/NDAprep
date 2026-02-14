@@ -19,7 +19,6 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static('./'));
 
 // --- AUTH API ---
 
