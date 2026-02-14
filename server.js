@@ -35,7 +35,12 @@ app.use(cors());
 app.use(bodyParser.json());
 // Static files handled by Vercel in production, only needed for local dev
 if (require.main === module) {
-    app.use(express.static(path.join(__dirname, './')));
+    app.use(express.static(path.join(__dirname, 'public')));
+    
+    // Fallback for SPA or root access in local dev
+    app.get('/', (req, res) => {
+        res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    });
 }
 
 // Apply config check to all API routes
