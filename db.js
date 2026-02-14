@@ -16,7 +16,10 @@ const DB = {
             body: JSON.stringify(attemptData)
         });
 
-        if (!response.ok) throw new Error('Failed to save attempt to server');
+        if (!response.ok) {
+            const errData = await response.json().catch(() => ({}));
+            throw new Error(errData.error || 'Failed to save attempt to server');
+        }
         return await response.json();
     },
 

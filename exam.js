@@ -635,7 +635,7 @@ async function finishTest() {
         window.location.href = 'result.html';
     } catch (err) {
         console.error('DB Error:', err);
-        alert('Failed to save result to server. Please ensure the backend is running.');
+        alert('Failed to save result: ' + err.message);
     }
 }
 

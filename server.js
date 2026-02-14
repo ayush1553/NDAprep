@@ -1,7 +1,9 @@
 const express = require('express');
+require('dotenv').config();
 const { createClient } = require('@supabase/supabase-js');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -19,6 +21,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, './')));
 
 // --- AUTH API ---
 
@@ -85,6 +88,10 @@ const isAdmin = async (req, res, next) => {
         .single();
 
     if (error || !data || data.role !== 'admin') {
+        if (error) {
+            console.error('Supabase Admin Check Error:', error); // Added console.error
+            return res.status(500).json({ error: error.message }); // Return specific error
+        }
         return res.status(403).json({ error: 'Admin access required' });
     }
     next();
@@ -96,12 +103,34 @@ const isAdmin = async (req, res, next) => {
 app.post('/api/attempts', async (req, res) => {
     const a = req.body;
     const attemptId = 'att_' + Date.now();
+    const userId = a.user_id || 'guest';
+
+    // Ensure User exists in Supabase (handle local migration or guest)
+    const { data: userExists, error: userError } = await supabase
+        .from('users')
+        .select('user_id')
+        .eq('user_id', userId)
+        .single();
+
+    if (userError && userError.code === 'PGRST116') {
+        // User not found in Supabase -> Create placeholder
+        console.log(`Auto-creating user record for: ${userId}`);
+        await supabase
+            .from('users')
+            .insert([{
+                user_id: userId,
+                email: userId + '@local.dev',
+                username: userId,
+                password_hash: 'migrated',
+                role: 'user'
+            }]);
+    }
 
     const { data, error } = await supabase
         .from('test_attempts')
         .insert([{
             attempt_id: attemptId,
-            user_id: a.user_id,
+            user_id: userId,
             test_id: a.test_id,
             test_type: a.test_type,
             subject: a.subject,
@@ -110,20 +139,35 @@ app.post('/api/attempts', async (req, res) => {
             total_questions: a.total_questions,
             attempted: a.attempted,
             correct: a.correct,
-            wrong: a.wrong,
+            wrong: a.incorrect || a.wrong || 0,
             unattempted: a.unattempted,
             score: a.score,
             max_score: a.max_score,
             accuracy: a.accuracy,
             time_taken: a.time_taken,
-            detailed_results: a.detailedResults // Saved directly to JSONB column
+            detailed_results: a.detailedResults
         }])
         .select()
         .single();
 
-    if (error) return res.status(500).json({ error: error.message });
+    if (error) {
+        console.error('Supabase Insert Error:', error);
+        return res.status(500).json({ error: error.message });
+    }
+
+    // Return with 'id' so result.html can use it immediately
     res.json({ id: attemptId, ...a });
 });
+
+// Helper to map DB row to frontend format
+function mapAttempt(a) {
+    return {
+        ...a,
+        id: a.attempt_id,
+        detailedResults: a.detailed_results,
+        incorrect: a.wrong
+    };
+}
 
 // 5. Get Attempts by User
 app.get('/api/attempts/user/:userId', async (req, res) => {
@@ -134,7 +178,7 @@ app.get('/api/attempts/user/:userId', async (req, res) => {
         .order('submitted_at', { ascending: false });
 
     if (error) return res.status(500).json({ error: error.message });
-    res.json(data);
+    res.json(data.map(mapAttempt));
 });
 
 app.get('/api/attempts/id/:attemptId', async (req, res) => {
@@ -147,7 +191,7 @@ app.get('/api/attempts/id/:attemptId', async (req, res) => {
     if (error || !data) {
         return res.status(error ? 500 : 404).json({ error: error ? error.message : 'Not found' });
     }
-    res.json(data);
+    res.json(mapAttempt(data));
 });
 
 // --- ADMIN API ---
@@ -200,7 +244,7 @@ app.get('/api/admin/user/:userId/attempts', isAdmin, async (req, res) => {
         .order('submitted_at', { ascending: false });
 
     if (error) return res.status(500).json({ error: error.message });
-    res.json(data);
+    res.json(data.map(mapAttempt));
 });
 
 // Export the app for Vercel
@@ -211,4 +255,3 @@ if (require.main === module) {
         console.log(`Server running at http://localhost:${PORT}`);
     });
 }
-

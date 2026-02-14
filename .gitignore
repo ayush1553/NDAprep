@@ -1,0 +1,4 @@
+.env
+node_modules/
+nda_platform.db
+data/details/
