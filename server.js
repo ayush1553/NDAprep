@@ -8,6 +8,9 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Serve static files from public directory (for local development)
+app.use(express.static('public'));
+
 // Supabase Configuration
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
