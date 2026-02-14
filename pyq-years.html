@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Year - NDA Prep</title>
+    <meta name="description" content="Select the year for NDA Previous Year Questions.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="pyq.css">
+    <link rel="stylesheet" href="pyq-years.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+        <div class="brand">
+            <div class="logo"><img src="nda_logo.jpeg" alt="NDA"></div>
+            <span>NDAPrep</span>
+        </div>
+        <div class="menu" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></div>
+    </header>
+
+    <!-- NAVIGATION MENU -->
+    <div class="nav-overlay" id="navOverlay">
+        <div class="nav-content">
+            <div class="nav-header">
+                <span class="nav-title">Menu</span>
+                <span class="close-menu" onclick="toggleMenu()"><i class="fa-solid fa-xmark"></i></span>
+            </div>
+            <ul class="nav-links">
+                <!-- User Profile Section -->
+                <li id="user-display" style="display: none;">
+                    <i class="fa-solid fa-circle-user icon"></i>
+                </li>
+
+                <li><a href="index.html"><i class="fa-solid fa-house icon"></i> Home Page</a></li>
+                <li><a href="mock-tests.html"><i class="fa-solid fa-clipboard-list icon"></i> Mock Tests</a></li>
+                <li><a href="pyqs.html"><i class="fa-solid fa-file-lines icon"></i> Previous Year Papers</a></li>
+                <li><a href="chapter_tests.html"><i class="fa-solid fa-book-open icon"></i> Chapter Tests</a></li>
+                <li><a href="performance.html"><i class="fa-solid fa-chart-simple icon"></i> Performance Analysis</a>
+                </li>
+
+                <li id="login-link"><a href="login.html"><i class="fa-solid fa-right-to-bracket icon"></i> Login</a>
+                </li>
+                <li id="signup-link"><a href="signup.html"><i class="fa-solid fa-user-plus icon"></i> Sign Up</a></li>
+                <li id="logout-link" style="display: none;"><a href="#" onclick="Auth.logout()"><i
+                            class="fa-solid fa-sign-out-alt icon"></i> Logout</a></li>
+
+                <li><a href="#"><i class="fa-solid fa-circle-info icon"></i> Update & Info</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <div class="container pyq-container">
+
+        <!-- HEADER CENTERED -->
+        <header class="pyq-header-center">
+            <h1 id="subject-title">Previous Year Questions</h1>
+            <p>Select a year to attempt the exam under real conditions.</p>
+
+            <!-- Breadcrumbs -->
+            <div class="pyq-breadcrumbs">
+                <a href="index.html">Home</a> <span class="separator">/</span>
+                <a href="pyqs.html">PYQs</a>
+                <span id="crumb-subject-container" style="display:none;"><span class="separator">/</span> <span
+                        id="crumb-subject" class="text">Subject</span></span>
+            </div>
+
+            <!-- Subject Toggle Cards -->
+            <div class="subject-toggle-container">
+                <div class="subject-toggle-cards">
+                    <div class="toggle-card active" onclick="switchSubject('Mathematics')">
+                        <span class="subject-name">Mathematics</span>
+                        <span class="test-count">21 Tests</span>
+                        <div class="active-indicator"></div>
+                    </div>
+                    <div class="toggle-card" onclick="switchSubject('GAT')">
+                        <span class="subject-name">General Ability Test</span>
+                        <span class="test-count">21 Tests</span>
+                        <div class="active-indicator"></div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- YEAR SELECTION GRID -->
+        <div class="year-grid" id="year-grid">
+            <!-- 2025 -->
+            <div class="year-card" data-year="2025" data-session="2">
+                <h3>NDA 2 2025 Examination</h3>
+                <div class="action-container"></div>
+            </div>
+            <div class="year-card" data-year="2025" data-session="1">
+                <h3>NDA 1 2025 Examination</h3>
+                <div class="action-container"></div>
+            </div>
+            <!-- 2024 -->
+            <div class="year-card" data-year="2024" data-session="2">
+                <h3>NDA 2 2024 Examination</h3>
+                <div class="action-container"></div>
+            </div>
+            <div class="year-card" data-year="2024" data-session="1">
+                <h3>NDA 1 2024 Examination</h3>
+                <div class="action-container"></div>
+            </div>
+            <!-- 2023 -->
+            <div class="year-card" data-year="2023" data-session="2">
+                <h3>NDA 2 2023 Examination</h3>
+                <div class="action-container"></div>
+            </div>
+            <div class="year-card" data-year="2023" data-session="1">
+                <h3>NDA 1 2023 Examination</h3>
+                <div class="action-container"></div>
+            </div>
+            <!-- 2022 -->
+            <div class="year-card" data-year="2022" data-session="2">
+                <h3>NDA 2 2022 Examination</h3>
+                <div class="action-container"></div>
+            </div>
+            <div class="year-card" data-year="2022" data-session="1">
+                <h3>NDA 1 2022 Examination</h3>
+                <div class="action-container"></div>
+            </div>
+            <!-- 2021 -->
+            <div class="year-card" data-year="2021" data-session="2">
+                <h3>NDA 2 2021 Examination</h3>
+                <div class="action-container"></div>
+            </div>
+            <div class="year-card" data-year="2021" data-session="1">
+                <h3>NDA 1 2021 Examination</h3>
+                <div class="action-container"></div>
+            </div>
+            <!-- 2020 -->
+            <div class="year-card" data-year="2020" data-session="2">
+                <h3>NDA 2 2020 Examination</h3>
+                <div class="action-container"></div>
+            </div>
+            <div class="year-card" data-year="2020" data-session="1">
+                <h3>NDA 1 2020 Examination</h3>
+                <div class="action-container"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 NDA Prep Platform. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="auth.js"></script>
+    <script src="db.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Parse URL Parameters to get selected subject
+        const urlParams = new URLSearchParams(window.location.search);
+        let subject = urlParams.get('subject') || 'Mathematics';
+
+        function updateUI() {
+            // Update UI based on subject
+            document.getElementById('subject-title').textContent = `${subject} – Previous Year Questions`;
+
+            // Update toggle cards
+            document.querySelectorAll('.toggle-card').forEach(card => {
+                const name = card.querySelector('.subject-name').textContent;
+                if ((subject === 'Mathematics' && name === 'Mathematics') ||
+                    (subject === 'GAT' && name === 'General Ability Test')) {
+                    card.classList.add('active');
+                } else {
+                    card.classList.remove('active');
+                }
+            });
+
+            checkAvailability();
+        }
+
+        function switchSubject(newSubject) {
+            subject = newSubject;
+            // Update URL without reloading
+            const newUrl = `${window.location.pathname}?subject=${encodeURIComponent(subject)}`;
+            window.history.pushState({ path: newUrl }, '', newUrl);
+            updateUI();
+        }
+
+        // Exam Metadata
+        const examMetadata = {
+            'Mathematics': {
+                'stats': '120 Qs . 150 mins . 300.0 Marks',
+                'sessions': {
+                    '1': { 'date': '13 Apr', 'roman': 'I' },
+                    '2': { 'date': '14 Sept', 'roman': 'II' }
+                }
+            },
+            'GAT': {
+                'stats': '150 Qs . 150 mins . 600.0 Marks',
+                'sessions': {
+                    '1': { 'date': '13 Apr', 'roman': 'I' },
+                    '2': { 'date': '14 Sept', 'roman': 'II' }
+                }
+            }
+        };
+
+        // AVAILABILITY LOGIC
+        function checkAvailability() {
+            const cards = document.querySelectorAll('.year-card');
+            cards.forEach(card => {
+                const year = card.dataset.year;
+                const session = card.dataset.session;
+
+                // Add exam details to card
+                const meta = examMetadata[subject];
+                const sessionInfo = meta.sessions[session];
+                const displaySubject = subject === 'Mathematics' ? 'Mathematics' : 'GAT';
+                const examFullTitle = `NDA-${sessionInfo.roman} ${year} (${displaySubject}) Official Paper (Held On: ${sessionInfo.date}, ${year})`;
+
+                const isAvailable = (subject === 'Mathematics' && year === '2022' && session === '2') ||
+                    (subject === 'Mathematics' && year === '2025' && session === '2') ||
+                    (subject === 'Mathematics' && year === '2024' && session === '2') ||
+                    (subject === 'Mathematics' && year === '2023' && session === '2') ||
+                    (subject === 'Mathematics' && year === '2024' && session === '1') ||
+                    (subject === 'Mathematics' && year === '2022' && session === '1') ||
+                    (subject === 'Mathematics' && year === '2023' && session === '1') ||
+                    (subject === 'GAT' && year === '2020' && session === '2') ||
+                    (subject === 'GAT' && year === '2021' && session === '1') ||
+                    (subject === 'GAT' && year === '2022' && session === '1');
+
+                let ctaHtml = '';
+                if (isAvailable) {
+                    // Reverting to "Start Test" as per user request
+                    ctaHtml = `<a href="javascript:void(0)" class="btn-cta" onclick="startTest('${year}', '${session}')">Start Test</a>`;
+                } else {
+                    ctaHtml = `<span class="btn-coming-soon">Coming Soon</span>`;
+                }
+
+                card.innerHTML = `
+                    <div class="card-main">
+                        <h3 class="exam-title">${examFullTitle}</h3>
+                        <div class="card-meta-row">
+                            <span class="exam-stats">${meta.stats}</span>
+                            ${ctaHtml}
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="language-label">English, Hindi</span>
+                    </div>
+                `;
+            });
+        }
+
+        function startTest(year, session) {
+            if (Auth.requireAuth()) {
+                const targetUrl = `instructions.html?subject=${encodeURIComponent(subject)}&year=${year}&session=${session}`;
+                window.location.href = targetUrl;
+            }
+        }
+
+        // Initialize
+        updateUI();
+    </script>
+</body>
+
+</html>

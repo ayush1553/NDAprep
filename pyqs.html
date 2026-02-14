@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Previous Year Questions - NDA Prep</title>
+    <meta name="description"
+        content="Attempt NDA Previous Year Questions (PYQs) for Mathematics and GAT under real exam conditions.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="pyq.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+        <div class="brand">
+            <div class="logo"><img src="nda_logo.jpeg" alt="NDA"></div>
+            <span>NDAPrep</span>
+        </div>
+        <div class="menu" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></div>
+    </header>
+
+    <!-- NAVIGATION MENU -->
+    <div class="nav-overlay" id="navOverlay">
+        <div class="nav-content">
+            <div class="nav-header">
+                <span class="nav-title">Menu</span>
+                <span class="close-menu" onclick="toggleMenu()"><i class="fa-solid fa-xmark"></i></span>
+            </div>
+            <ul class="nav-links">
+                <!-- User Profile Section -->
+                <li id="user-display" style="display: none;">
+                    <i class="fa-solid fa-circle-user icon"></i>
+                </li>
+
+                <li><a href="index.html"><i class="fa-solid fa-house icon"></i> Home Page</a></li>
+                <li><a href="mock-tests.html"><i class="fa-solid fa-clipboard-list icon"></i> Mock Tests</a></li>
+                <li><a href="pyqs.html"><i class="fa-solid fa-file-lines icon"></i> Previous Year Papers</a></li>
+                <li><a href="chapter_tests.html"><i class="fa-solid fa-book-open icon"></i> Chapter Tests</a></li>
+                <li><a href="performance.html"><i class="fa-solid fa-chart-simple icon"></i> Performance Analysis</a>
+                </li>
+
+                <li id="login-link"><a href="login.html"><i class="fa-solid fa-right-to-bracket icon"></i> Login</a>
+                </li>
+                <li id="signup-link"><a href="signup.html"><i class="fa-solid fa-user-plus icon"></i> Sign Up</a></li>
+                <li id="logout-link" style="display: none;"><a href="#" onclick="Auth.logout()"><i
+                            class="fa-solid fa-sign-out-alt icon"></i> Logout</a></li>
+
+                <li><a href="#"><i class="fa-solid fa-circle-info icon"></i> Update & Info</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <div class="container pyq-container">
+
+        <!-- HEADER CENTERED -->
+        <header class="pyq-header-center">
+            <h1>Previous Year Questions – NDA</h1>
+            <p>Practice NDA questions year-wise and subject-wise under real exam conditions.</p>
+
+            <!-- Breadcrumbs -->
+            <div class="pyq-breadcrumbs">
+                <a href="index.html">Home</a> <span class="separator">/</span>
+                <span id="crumb-main">PYQs</span>
+                <span id="crumb-subject" class="hidden"><span class="separator">/</span> <span
+                        class="text">Mathematics</span></span>
+                <span id="crumb-year" class="hidden"><span class="separator">/</span> <span
+                        class="text">2022</span></span>
+            </div>
+        </header>
+
+        <!-- VIEW 1: SUBJECT SELECTION -->
+        <div id="view-subject" class="pyq-view active">
+            <div class="subject-selection-grid">
+                <!-- Mathematics Card -->
+                <div class="selection-card" onclick="selectSubject('Mathematics')">
+                    <div class="card-body">
+                        <h2>Mathematics (MAT)</h2>
+                        <p>NDA Mathematics paper with full syllabus coverage</p>
+                        <div class="meta-tags">
+                            <span class="meta-tag">300 Marks</span>
+                            <span class="meta-tag">Objective Questions</span>
+                        </div>
+                    </div>
+                    <div class="card-footer-btn">
+                        <span>View PYQs &rarr;</span>
+                    </div>
+                </div>
+
+                <!-- GAT Card -->
+                <div class="selection-card" onclick="selectSubject('GAT')">
+                    <div class="card-body">
+                        <h2>General Ability Test (GAT)</h2>
+                        <p>Physics, Chemistry, Biology, History, Geography, Polity</p>
+                        <div class="meta-tags">
+                            <span class="meta-tag">600 Marks</span>
+                            <span class="meta-tag">Mixed Subjects</span>
+                        </div>
+                    </div>
+                    <div class="card-footer-btn">
+                        <span>View PYQs &rarr;</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 2: YEAR SELECTION (Restored & Updated) -->
+
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 NDA Prep Platform. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="auth.js"></script>
+    <script src="db.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Flow: Subject -> Year -> Exam
+        let currentSubject = '';
+
+        function selectSubject(subject) {
+            // Navigate to the new Year Selection page
+            const targetUrl = `pyq-years.html?subject=${encodeURIComponent(subject)}`;
+            window.location.href = targetUrl;
+        }
+
+        function selectSubject(subject) {
+            // Navigate to the Year Selection page
+            const targetUrl = `pyq-years.html?subject=${encodeURIComponent(subject)}`;
+            window.location.href = targetUrl;
+        }
+    </script>
+</body>
+
+</html>

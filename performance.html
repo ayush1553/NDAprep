@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NDAPrep - Performance</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        /* GLOBAL & ANIMATIONS */
+
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0f172a, #1e3a8a 40%, #2563eb);
+            --nav-bg: linear-gradient(90deg, #0f1c3f, #08142e);
+            --card-bg: rgba(255, 255, 255, 0.08);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --accent-blue: #60a5fa;
+            --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .stagger-1 {
+            animation-delay: 0.1s;
+        }
+
+        .stagger-2 {
+            animation-delay: 0.2s;
+        }
+
+        .stagger-3 {
+            animation-delay: 0.3s;
+        }
+
+        .stagger-4 {
+            animation-delay: 0.4s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: white;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* CONTENT */
+        .container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+        }
+
+        .header p {
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        /* STATS */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            border-radius: 18px;
+            padding: 25px;
+            border: 1px solid var(--card-border);
+            transition: var(--transition-smooth);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .card:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .card h2 {
+            font-size: clamp(22px, 5vw, 28px);
+            margin-bottom: 4px;
+        }
+
+        .card span {
+            opacity: 0.8;
+            font-size: 14px;
+        }
+
+        /* TABLE */
+
+        .table-container {
+            margin-top: 50px;
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            border-radius: 18px;
+            padding: 25px;
+            border: 1px solid var(--card-border);
+            overflow-x: auto;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 700px;
+        }
+
+        th {
+            text-align: left;
+            padding: 15px 10px;
+            opacity: 0.7;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 16px 10px;
+            font-size: 14px;
+        }
+
+        tr:not(:last-child) {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge.success {
+            background: rgba(34, 197, 94, 0.15);
+            color: #22c55e;
+        }
+
+        .badge.danger {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+        }
+
+        .review-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .review-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* CHARTS */
+
+        .charts {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .chart-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            border-radius: 18px;
+            padding: 25px;
+            height: 380px;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--card-border);
+            transition: var(--transition-smooth);
+        }
+
+        .chart-card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .chart-card h3 {
+            margin-bottom: 15px;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            flex: 1;
+            min-height: 0;
+        }
+
+        .chart-card canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        .section-title {
+            margin-bottom: 20px;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        /* RESPONSIVE */
+
+        @media(max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media(max-width: 480px) {
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 20px;
+            }
+
+            .nav-title {
+                font-size: 18px;
+            }
+
+            .table-container {
+                padding: 15px;
+            }
+
+            .chart-card {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+        <div class="brand">
+            <div class="logo"><img src="nda_logo.jpeg" alt="NDA"></div>
+            <span>NDAPrep</span>
+        </div>
+        <div class="menu" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></div>
+    </header>
+
+    <!-- NAVIGATION MENU -->
+    <div class="nav-overlay" id="navOverlay">
+        <div class="nav-content">
+            <div class="nav-header">
+                <span class="nav-title">Menu</span>
+                <span class="close-menu" onclick="toggleMenu()"><i class="fa-solid fa-xmark"></i></span>
+            </div>
+            <ul class="nav-links">
+                <!-- User Profile Section -->
+                <li id="user-display" style="display: none;">
+                    <i class="fa-solid fa-circle-user icon"></i>
+                </li>
+
+                <li><a href="index.html"><i class="fa-solid fa-house icon"></i> Home Page</a></li>
+                <li><a href="mock-tests.html"><i class="fa-solid fa-clipboard-list icon"></i> Mock Tests</a></li>
+                <li><a href="pyqs.html"><i class="fa-solid fa-file-lines icon"></i> Previous Year Papers</a></li>
+                <li><a href="chapter_tests.html"><i class="fa-solid fa-book-open icon"></i> Chapter Tests</a></li>
+                <li><a href="performance.html"><i class="fa-solid fa-chart-simple icon"></i> Performance Analysis</a>
+                </li>
+
+                <li id="login-link"><a href="login.html"><i class="fa-solid fa-right-to-bracket icon"></i> Login</a>
+                </li>
+                <li id="signup-link"><a href="signup.html"><i class="fa-solid fa-user-plus icon"></i> Sign Up</a></li>
+                <li id="logout-link" style="display: none;"><a href="#" onclick="Auth.logout()"><i
+                            class="fa-solid fa-sign-out-alt icon"></i> Logout</a></li>
+
+                <li><a href="#"><i class="fa-solid fa-circle-info icon"></i> Update & Info</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="header animate-fade-in">
+            <h1 id="welcome-msg">Personal Dashboard 👋</h1>
+            <p>Track your preparation journey and identify weak areas.</p>
+        </div>
+
+        <div class="stats" id="summary-container">
+            <!-- Populated by JS -->
+        </div>
+
+        <!-- TEST HISTORY -->
+        <div class="table-container">
+            <h2 class="section-title">Test History</h2>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Test Name</th>
+                            <th>Score</th>
+                            <th>Accuracy</th>
+                            <th>Time</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-body">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+        <!-- CHARTS -->
+        <div class="charts" id="charts-container">
+            <!-- Populated by JS -->
+        </div>
+
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="auth.js"></script>
+    <script src="db.js"></script>
+    <script src="script.js"></script>
+    <script>
+
+
+
+        let lineChart, barChart;
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Check Auth
+            const user = Auth.getSession();
+            if (!user) {
+                window.location.href = 'login.html?redirect=performance.html';
+                return;
+            }
+
+            document.getElementById('welcome-msg').textContent = `Hi, ${user.email.split('@')[0]} 👋`;
+
+            try {
+                const summary = await DB.getPerformanceSummary(user.id);
+                const allAttempts = await DB.getAttemptsByUser(user.id);
+                const attempts = allAttempts.sort((a, b) => new Date(b.submitted_at) - new Date(a.submitted_at));
+
+                renderSummary(summary);
+                renderHistory(attempts);
+                renderCharts(attempts, user.id);
+            } catch (err) {
+                console.error('Failed to load performance data:', err);
+            }
+        });
+
+        function renderSummary(s) {
+            const container = document.getElementById('summary-container');
+            if (!s) {
+                container.innerHTML = '<div class="empty-state">No attempts found yet. Start a test to see results!</div>';
+                return;
+            }
+
+            container.innerHTML = `
+                <div class="card animate-fade-in stagger-1">
+                    <h2>${s.totalTests}</h2>
+                    <span>Total Attempts</span>
+                </div>
+                <div class="card animate-fade-in stagger-2">
+                    <h2>${s.pyqCount}</h2>
+                    <span>PYQs Solved</span>
+                </div>
+                <div class="card animate-fade-in stagger-3">
+                    <h2>${s.avgScore}</h2>
+                    <span>Avg Score</span>
+                </div>
+                <div class="card animate-fade-in stagger-4">
+                    <h2>${s.avgAccuracy}%</h2>
+                    <span>Avg Accuracy</span>
+                </div>
+            `;
+        }
+
+        function renderHistory(attempts) {
+            const body = document.getElementById('history-body');
+            if (attempts.length === 0) {
+                body.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 40px; opacity: 0.6">No test history available.</td></tr>';
+                return;
+            }
+
+            body.innerHTML = attempts.map(a => {
+                const date = new Date(a.submitted_at).toLocaleDateString('en-IN', { day: '2-digit', month: 'short' });
+                const timeStr = Math.floor(a.time_taken / 60) + 'm ' + (a.time_taken % 60) + 's';
+                const accClass = a.accuracy >= 80 ? 'success' : 'danger';
+
+                return `
+                    <tr>
+                        <td><strong>NDA ${a.session || ''} ${a.year}</strong> - ${a.subject}</td>
+                        <td><span style="font-weight:700">${a.score}</span> / 300</td>
+                        <td><span class="badge ${accClass}">${a.accuracy}%</span></td>
+                        <td>${timeStr}</td>
+                        <td style="opacity:0.7">${date}</td>
+                        <td><button class="review-btn" onclick="viewReview('${a.id}')">View Review</button></td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        async function renderCharts(attempts, userId) {
+            const container = document.getElementById('charts-container');
+
+            if (attempts.length === 0) {
+                container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 60px; opacity: 0.6">Complete some tests to see your performance trends!</div>';
+                return;
+            }
+
+            // Prepare data for charts
+            const recentAttempts = attempts.slice(0, 10).reverse();
+            const labels = recentAttempts.map(a => {
+                const date = new Date(a.submitted_at);
+                return date.toLocaleDateString('en-IN', { day: '2-digit', month: 'short' });
+            });
+            const accuracyData = recentAttempts.map(a => a.accuracy);
+
+            // Get subject-wise data
+            const math = await DB.getSubjectSummary(userId, 'Mathematics');
+            const gat = await DB.getSubjectSummary(userId, 'GAT');
+
+            container.innerHTML = `
+                <div class="chart-card">
+                    <h3>Accuracy Trend</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="lineChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <h3>Subject Accuracy</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="barChart"></canvas>
+                    </div>
+                </div>
+            `;
+
+            // Line Chart
+            lineChart = new Chart(document.getElementById('lineChart'), {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Accuracy (%)',
+                        data: accuracyData,
+                        borderColor: '#60a5fa',
+                        backgroundColor: 'rgba(96,165,250,0.2)',
+                        borderWidth: 2,
+                        tension: 0.4,
+                        fill: true,
+                        pointRadius: 4,
+                        pointBackgroundColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            ticks: { color: '#ffffff' },
+                            grid: { color: 'rgba(255,255,255,0.1)' }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            ticks: { color: '#ffffff' },
+                            grid: { color: 'rgba(255,255,255,0.1)' }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: { color: '#ffffff' }
+                        }
+                    }
+                }
+            });
+
+            // Bar Chart
+            const ctx = document.getElementById('barChart').getContext('2d');
+            barChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Mathematics', 'GAT'],
+                    datasets: [{
+                        label: 'Avg Accuracy (%)',
+                        data: [math?.avgAccuracy || 0, gat?.avgAccuracy || 0],
+                        borderRadius: 6,
+                        barThickness: 32,
+                        borderSkipped: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#ffffff',
+                                font: { size: 14, weight: '600' }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: { color: '#ffffff' },
+                            grid: { display: false }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            ticks: { color: '#ffffff' },
+                            grid: { color: 'rgba(255,255,255,0.06)' }
+                        }
+                    }
+                }
+            });
+
+            // Apply gradients
+            setTimeout(() => {
+                const chartArea = barChart.chartArea;
+                if (!chartArea) return;
+
+                const gradient1 = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+                gradient1.addColorStop(0, '#00c6ff');
+                gradient1.addColorStop(1, '#0072ff');
+
+                const gradient2 = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+                gradient2.addColorStop(0, '#a855f7');
+                gradient2.addColorStop(1, '#7c3aed');
+
+                barChart.data.datasets[0].backgroundColor = [gradient1, gradient2];
+                barChart.update();
+            }, 100);
+        }
+
+        async function viewReview(attemptId) {
+            try {
+                const attempt = await DB.getAttemptById(attemptId);
+                if (attempt) {
+                    localStorage.setItem('ndaExamResult', JSON.stringify(attempt));
+                    window.location.href = 'result.html?review=true';
+                }
+            } catch (err) {
+                alert('Failed to load review details.');
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mock Tests - NDAPrep</title>
+    <meta name="description" content="Official Full Length Mock Tests for NDA Preparation.">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="mock-tests.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+        <div class="brand">
+            <div class="logo"><img src="nda_logo.jpeg" alt="NDA"></div>
+            <span>NDAPrep</span>
+        </div>
+        <div class="menu" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></div>
+    </header>
+
+    <!-- NAVIGATION MENU -->
+    <div class="nav-overlay" id="navOverlay">
+        <div class="nav-content">
+            <div class="nav-header">
+                <span class="nav-title">Menu</span>
+                <span class="close-menu" onclick="toggleMenu()"><i class="fa-solid fa-xmark"></i></span>
+            </div>
+            <ul class="nav-links">
+                <!-- User Profile Section -->
+                <li id="user-display" style="display: none;">
+                    <i class="fa-solid fa-circle-user icon"></i>
+                </li>
+
+                <li><a href="index.html"><i class="fa-solid fa-house icon"></i> Home Page</a></li>
+                <li><a href="mock-tests.html"><i class="fa-solid fa-clipboard-list icon"></i> Mock Tests</a></li>
+                <li><a href="pyqs.html"><i class="fa-solid fa-file-lines icon"></i> Previous Year Papers</a></li>
+                <li><a href="chapter_tests.html"><i class="fa-solid fa-book-open icon"></i> Chapter Tests</a></li>
+                <li><a href="performance.html"><i class="fa-solid fa-chart-simple icon"></i> Performance Analysis</a>
+                </li>
+
+                <li id="login-link"><a href="login.html"><i class="fa-solid fa-right-to-bracket icon"></i> Login</a>
+                </li>
+                <li id="signup-link"><a href="signup.html"><i class="fa-solid fa-user-plus icon"></i> Sign Up</a></li>
+                <li id="logout-link" style="display: none;"><a href="#" onclick="Auth.logout()"><i
+                            class="fa-solid fa-sign-out-alt icon"></i> Logout</a></li>
+
+                <li><a href="#"><i class="fa-solid fa-circle-info icon"></i> Update & Info</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- SUBJECT TABS -->
+        <div class="subject-tabs">
+            <div id="select-mat" class="subject-card active" onclick="switchTab('MAT')">
+                <h3>Mathematics</h3>
+                <p id="mat-count">3 Tests</p>
+            </div>
+            <div id="select-gat" class="subject-card" onclick="switchTab('GAT')">
+                <h3>General Ability</h3>
+                <p id="gat-count">5 Tests</p>
+            </div>
+        </div>
+
+        <!-- TEST LIST -->
+        <div class="test-list" id="mock-list-container">
+            <!-- Cards will be injected here -->
+        </div>
+
+    </div>
+
+    <script src="auth.js"></script>
+    <script src="db.js"></script>
+    <script src="script.js"></script>
+    <script>
+        let currentTab = 'MAT';
+
+        // Mock data for display purposes
+        // In a real app, this would be fetched from the backend/db.js
+        const mockTests = {
+            'MAT': [
+                { id: 1, slug: 'mt01_mat_full_length', title: 'UPSC NDA 01/2026 FT 1: Mathematics', attempted: false, qs: 120, mins: 150, marks: 300.0 },
+                { id: 2, slug: 'mt02_mat_full_length', title: 'UPSC NDA 01/2026 FT 2: Mathematics', attempted: false, qs: 120, mins: 150, marks: 300.0 },
+                { id: 3, slug: 'mt03_mat_full_length', title: 'UPSC NDA 01/2026 FT 3: Mathematics', attempted: false, qs: 120, mins: 150, marks: 300.0 },
+                { title: 'UPSC NDA 01/2026 FT 4: Mathematics', comingSoon: true },
+                { title: 'UPSC NDA 01/2026 FT 5: Mathematics', comingSoon: true },
+                { title: 'UPSC NDA 01/2026 FT 6: Mathematics', comingSoon: true },
+                { title: 'UPSC NDA 01/2026 FT 7: Mathematics', comingSoon: true },
+                { title: 'UPSC NDA 01/2026 FT 8: Mathematics', comingSoon: true },
+                { title: 'UPSC NDA 01/2026 FT 9: Mathematics', comingSoon: true },
+                { title: 'UPSC NDA 01/2026 FT 10: Mathematics', comingSoon: true },
+                { title: 'UPSC NDA 01/2026 FT 11: Mathematics', comingSoon: true },
+                { title: 'UPSC NDA 01/2026 FT 12: Mathematics', comingSoon: true },
+                { title: 'UPSC NDA 01/2026 FT 13: Mathematics', comingSoon: true }
+            ],
+            'GAT': [
+                { id: 1, slug: 'mt01_gat_full_length', title: 'UPSC NDA 01/2026 FT 1: General Ability', attempted: false, qs: 150, mins: 150, marks: 600.0 },
+                { id: 2, slug: 'mt02_gat_full_length', title: 'UPSC NDA 01/2026 FT 2: General Ability', attempted: false, qs: 150, mins: 150, marks: 600.0 },
+                { id: 3, slug: 'mt03_gat_full_length', title: 'UPSC NDA 01/2026 FT 3: General Ability', attempted: false, qs: 150, mins: 150, marks: 600.0 },
+                { id: 4, slug: 'mt04_gat_full_length', title: 'UPSC NDA 01/2026 FT 4: General Ability', attempted: false, qs: 150, mins: 150, marks: 600.0 },
+                { id: 5, slug: 'mt05_gat_full_length', title: 'UPSC NDA 01/2026 FT 5: General Ability', attempted: false, qs: 150, mins: 150, marks: 600.0 },
+                { title: 'UPSC NDA 01/2026 FT 6: General Ability', comingSoon: true },
+                { title: 'UPSC NDA 01/2026 FT 7: General Ability', comingSoon: true },
+                { title: 'UPSC NDA 01/2026 FT 8: General Ability', comingSoon: true },
+                { title: 'UPSC NDA 01/2026 FT 9: General Ability', comingSoon: true },
+                { title: 'UPSC NDA 01/2026 FT 10: General Ability', comingSoon: true }
+            ]
+        };
+
+        function switchTab(tab) {
+            currentTab = tab;
+
+            // UI Updates for selector
+            document.querySelectorAll('.subject-card').forEach(card => card.classList.remove('active'));
+            if (tab === 'MAT') {
+                document.getElementById('select-mat').classList.add('active');
+            } else {
+                document.getElementById('select-gat').classList.add('active');
+            }
+
+            renderCards();
+        }
+
+        function renderCards() {
+            const container = document.getElementById('mock-list-container');
+            const tests = mockTests[currentTab];
+
+            // Update counts in selectors
+            document.getElementById('mat-count').textContent = `${mockTests['MAT'].length} Tests`;
+            document.getElementById('gat-count').textContent = `${mockTests['GAT'].length} Tests`;
+
+            container.innerHTML = tests.map(test => {
+                if (test.comingSoon) {
+                    return `
+                        <div class="test-card coming-soon">
+                            <div class="card-main">
+                                <div class="title-row">
+                                    <div class="test-title">${test.title}</div>
+                                    <div class="coming-soon-badge">Coming Soon</div>
+                                </div>
+                                <div class="meta-row">
+                                    Launching Soon...
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                Syllabus · English · Hindi
+                            </div>
+                        </div>
+                    `;
+                }
+                if (test.attempted) {
+                    return `
+                        <div class="test-card">
+                            <div class="card-main">
+                                <div class="title-row">
+                                    <div class="test-title">${test.title}</div>
+                                    <div class="start-link" onclick="window.location.href='result.html?id=${test.id}'">View Results</div>
+                                </div>
+                                <div class="meta-row">
+                                    ${test.score}/${test.maxScore} Marks · ${test.rank}/${test.totalRank} Rank
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                Syllabus · Attempted on ${test.date}
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    return `
+                        <div class="test-card">
+                            <div class="card-main">
+                                <div class="title-row">
+                                    <div class="test-title">${test.title}</div>
+                                    <div class="start-link" onclick="window.location.href='instructions.html?type=Mock&subject=${currentTab === 'MAT' ? 'Mathematics' : 'GAT'}&slug=${test.slug}'">Start Test</div>
+                                </div>
+                                <div class="meta-row">
+                                    ${test.qs} Qs · ${test.mins} mins · ${test.marks.toFixed(1)} Marks
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                Syllabus · English · Hindi
+                            </div>
+                        </div>
+                    `;
+                }
+            }).join('');
+        }
+
+        // Initial render
+        window.addEventListener('DOMContentLoaded', () => {
+            renderCards();
+        });
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,5 @@
+// GAT Static GK Chapter Test Data Placeholder
+const chapterTestData = {
+    title: "Static GK Chapter Test",
+    questions: []
+};

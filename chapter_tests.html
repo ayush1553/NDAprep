@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter Tests - NDA Prep</title>
+    <meta name="description" content="Official CBT-style chapter test selection for NDA Preparation.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="chapter-tests.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Styles moved to chapter-tests.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+        <div class="brand">
+            <div class="logo"><img src="nda_logo.jpeg" alt="NDA"></div>
+            <span>NDAPrep</span>
+        </div>
+        <div class="menu" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></div>
+    </header>
+
+    <!-- NAVIGATION MENU -->
+    <div class="nav-overlay" id="navOverlay">
+        <div class="nav-content">
+            <div class="nav-header">
+                <span class="nav-title">Menu</span>
+                <span class="close-menu" onclick="toggleMenu()"><i class="fa-solid fa-xmark"></i></span>
+            </div>
+            <ul class="nav-links">
+                <!-- User Profile Section -->
+                <li id="user-display" style="display: none;">
+                    <i class="fa-solid fa-circle-user icon"></i>
+                </li>
+
+                <li><a href="index.html"><i class="fa-solid fa-house icon"></i> Home Page</a></li>
+                <li><a href="mock-tests.html"><i class="fa-solid fa-clipboard-list icon"></i> Mock Tests</a></li>
+                <li><a href="pyqs.html"><i class="fa-solid fa-file-lines icon"></i> Previous Year Papers</a></li>
+                <li><a href="chapter_tests.html"><i class="fa-solid fa-book-open icon"></i> Chapter Tests</a></li>
+                <li><a href="performance.html"><i class="fa-solid fa-chart-simple icon"></i> Performance Analysis</a>
+                </li>
+
+                <li id="login-link"><a href="login.html"><i class="fa-solid fa-right-to-bracket icon"></i> Login</a>
+                </li>
+                <li id="signup-link"><a href="signup.html"><i class="fa-solid fa-user-plus icon"></i> Sign Up</a></li>
+                <li id="logout-link" style="display: none;"><a href="#" onclick="Auth.logout()"><i
+                            class="fa-solid fa-sign-out-alt icon"></i> Logout</a></li>
+
+                <li><a href="#"><i class="fa-solid fa-circle-info icon"></i> Update & Info</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <main class="cbt-container">
+
+        <!-- Top-Level Toggle -->
+        <div class="primary-toggle">
+            <button id="toggle-gat" class="toggle-btn active" onclick="switchMainTab('GAT')">Chapter Test (GAT)</button>
+            <button id="toggle-mat" class="toggle-btn" onclick="switchMainTab('MAT')">Chapter Test (MAT)</button>
+        </div>
+
+        <!-- GAT View Pane -->
+        <div id="pane-gat" class="view-pane active">
+            <div class="gat-subjects-wrapper">
+                <div class="gat-subjects-list" id="gat-subjects-container">
+                    <!-- English, History, etc. -->
+                </div>
+            </div>
+
+            <div class="ct-list" id="gat-cards-container">
+                <!-- Cards appear here -->
+            </div>
+        </div>
+
+        <!-- MAT View Pane -->
+        <div id="pane-mat" class="view-pane">
+            <div class="section-header-compact">Mathematics Chapter Tests</div>
+            <div class="ct-list" id="mat-cards-container">
+                <!-- Maths Cards appear here directly -->
+            </div>
+        </div>
+
+    </main>
+
+    <script src="auth.js"></script>
+    <script src="db.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Data Structures
+        const mathChapters = [
+            { category: "Algebra & Basics" },
+            { id: 1, slug: "ct01_set_theory_and_types_of_sets", title: "CT 1: Set Theory & Types of Sets" },
+            { id: 2, slug: "ct02_relations_and_functions", title: "CT 2: Relations & Functions" },
+            { id: 3, slug: "ct03_complex_numbers", title: "CT 3: Complex Numbers" },
+            { id: 4, slug: "ct04_binary_system", title: "CT 4: Binary System" },
+            { id: 5, slug: "ct05_sequence_and_series", title: "CT 5: Sequence and Series" },
+            { id: 6, slug: "ct06_quadratic_equations", title: "CT 6: Quadratic Equations" },
+            { id: 7, slug: "ct07_theory_of_equations", title: "CT 7: Theory of Equations" },
+            { id: 8, slug: "ct08_linear_inequalities", title: "CT 8: Linear Inequalities" },
+            { id: 9, slug: "ct09_permutation_and_combination", title: "CT 9: Permutation & Combination" },
+            { id: 10, slug: "ct10_binomial_theorem", title: "CT 10: Binomial Theorem" },
+            { id: 11, slug: "ct11_logarithms", title: "CT 11: Logarithms" },
+            { id: 12, slug: "ct12_matrices_1", title: "CT 12: Matrices – I" },
+            { id: 13, slug: "ct13_matrices_2", title: "CT 13: Matrices – II" },
+            { id: 14, slug: "ct14_determinants_1", title: "CT 14: Determinants – I" },
+            { id: 15, slug: "ct15_determinants_2", title: "CT 15: Determinants – II" },
+            { category: "Trigonometry" },
+            { id: 16, slug: "ct16_trigonometry_fundamentals", title: "CT 16: Trigonometry Fundamentals" },
+            { id: 17, slug: "ct17_trigonometric_ratios", title: "CT 17: Trigonometric Ratios" },
+            { id: 18, slug: "ct18_trigonometric_identities", title: "CT 18: Trigonometric Identities" },
+            { id: 19, slug: "ct19_inverse_trigonometric_functions", title: "CT 19: Inverse Trigonometric Functions" },
+            { id: 20, slug: "ct20_heights_and_distance", title: "CT 20: Heights & Distance" },
+            { category: "Coordinate Geometry" },
+            { id: 21, slug: "ct21_lines", title: "CT 21: Lines" },
+            { id: 22, slug: "ct22_circles", title: "CT 22: Circles" },
+            { id: 23, slug: "ct23_parabola", title: "CT 23: Parabola" },
+            { id: 24, slug: "ct24_ellipse", title: "CT 24: Ellipse" },
+            { id: 25, slug: "ct25_hyperbola", title: "CT 25: Hyperbola" },
+            { id: 26, slug: "ct26_three_dimensional_geometry_1", title: "CT 26: Three Dimensional Geometry – I" },
+            { id: 27, slug: "ct27_three_dimensional_geometry_2", title: "CT 27: Three Dimensional Geometry – II" },
+            { category: "Calculus" },
+            { id: 28, slug: "ct28_functions", title: "CT 28: Functions" },
+            { id: 29, slug: "ct29_limits_and_continuity", title: "CT 29: Limits & Continuity" },
+            { id: 30, slug: "ct30_continuity_and_differentiability", title: "CT 30: Continuity & Differentiability" },
+            { id: 31, slug: "ct31_derivatives", title: "CT 31: Derivatives" },
+            { id: 32, slug: "ct32_tangents_and_normals", title: "CT 32: Tangents & Normals" },
+            { id: 33, slug: "ct33_maxima_and_minima", title: "CT 33: Maxima & Minima" },
+            { id: 34, slug: "ct34_indefinite_integrals", title: "CT 34: Indefinite Integrals" },
+            { id: 35, slug: "ct35_definite_integrals", title: "CT 35: Definite Integrals" },
+            { id: 36, slug: "ct36_application_of_definite_integrals", title: "CT 36: Application of Definite Integrals" },
+            { id: 37, slug: "ct37_differential_equations_order_and_degree", title: "CT 37: Differential Equations – Order & Degree" },
+            { id: 38, slug: "ct38_differential_equations", title: "CT 38: Differential Equations" },
+            { category: "Vector & Statistics" },
+            { id: 39, slug: "ct39_vector_algebra", title: "CT 39: Vector Algebra" },
+            { id: 40, slug: "ct40_vector_algebra_applications", title: "CT 40: Vector Algebra – Applications" },
+            { id: 41, slug: "ct41_statistics_frequency", title: "CT 41: Statistics – Frequency" },
+            { id: 42, slug: "ct42_statistics_graphical_representation", title: "CT 42: Statistics – Graphical Representation" },
+            { id: 43, slug: "ct43_statistics_measures", title: "CT 43: Statistics – Measures" },
+            { id: 44, slug: "ct44_statistics_correlation_and_regression", title: "CT 44: Statistics – Correlation & Regression" },
+            { category: "Probability" },
+            { id: 45, slug: "ct45_probability_events_and_outcomes", title: "CT 45: Probability – Events & Outcomes" },
+            { id: 46, slug: "ct46_probability_theorems_and_conditional_probability", title: "CT 46: Probability – Theorems & Conditional Probability" },
+            { id: 47, slug: "ct47_probability_random_variable_and_binomial_distribution", title: "CT 47: Probability – Random Variable & Binomial Distribution" }
+        ];
+
+        const disciplines = [
+            "English", "Art & Culture", "History", "Geography",
+            "Polity", "Economy", "Physics", "Chemistry",
+            "General Science", "Static GK"
+        ];
+
+        const physicsChapters = [
+            { id: 1, slug: "ct01_units_and_dimensions", title: "CT 1: Units & Dimensions" },
+            { id: 2, slug: "ct02_vectors", title: "CT 2: Vectors" },
+            { id: 3, slug: "ct03_motion_in_1d", title: "CT 3: Motion in 1D" },
+            { id: 4, slug: "ct04_motion_in_2d", title: "CT 4: Motion in 2D" },
+            { id: 5, slug: "ct05_newtons_laws_of_motion", title: "CT 5: Newton’s Laws of Motion" },
+            { id: 6, slug: "ct06_work_energy_and_power", title: "CT 6: Work, Energy & Power" },
+            { id: 7, slug: "ct07_properties_of_matter", title: "CT 7: Properties of Matter" },
+            { id: 8, slug: "ct08_gravitation", title: "CT 8: Gravitation" },
+            { id: 9, slug: "ct09_basics_of_rotational_dynamics", title: "CT 9: Basics of Rotational Dynamics" },
+            { id: 10, slug: "ct10_heat_and_calorimetry", title: "CT 10: Heat & Calorimetry" },
+            { id: 11, slug: "ct11_electrostatics", title: "CT 11: Electrostatics" },
+            { id: 12, slug: "ct12_electromagnetism_1", title: "CT 12: Electromagnetism – I" },
+            { id: 13, slug: "ct13_electromagnetism_2", title: "CT 13: Electromagnetism – II" },
+            { id: 14, slug: "ct14_general_appliances_and_instruments", title: "CT 14: General Appliances & Instruments" },
+            { id: 15, slug: "ct15_optics", title: "CT 15: Optics" },
+            { id: 16, slug: "ct16_modern_physics", title: "CT 16: Modern Physics" }
+        ];
+
+        const chemistryChapters = [
+            { id: 1, slug: "ct01_physical_and_chemical_changes", title: "CT 1: Physical & Chemical Changes" },
+            { id: 2, slug: "ct02_elements_mixtures_and_compounds", title: "CT 2: Elements, Mixtures & Compounds" },
+            { id: 3, slug: "ct03_laws_of_chemical_combination", title: "CT 3: Laws of Chemical Combination" },
+            { id: 4, slug: "ct04_Atomic_Structure", title: "CT 4: Atomic Structure I" },
+            { id: 5, slug: "ct05_Atomic_Structure", title: "CT 5: Atomic Structure II" },
+            { id: 6, slug: "ct06_Atomic_Structure", title: "CT 6: Atomic Structure III" },
+            { id: 7, slug: "ct07_Periodic_Classification", title: "CT 7: Periodic Classification" },
+            { id: 8, slug: "ct08_Periodic_Properties", title: "CT 8: Periodic Properties" },
+            { id: 9, slug: "ct09_Chemical_Bonding", title: "CT 9: Chemical Bonding" },
+            { id: 10, slug: "ct10_Mole_Concept", title: "CT 10: Mole Concept I" },
+            { id: 11, slug: "ct11_Mole_Concept_II", title: "CT 11: Mole Concept II" },
+            { id: 12, slug: "ct12_Redox_Reaction", title: "CT 12: Redox Reaction" },
+            { id: 13, slug: "ct13_Electrochemistry", title: "CT 13: Electrochemistry" },
+            { id: 14, slug: "ct14_Nomenclature_of_Carbon_Compounds", title: "CT 14: Nomenclature of Carbon Compounds" },
+            { id: 15, slug: "ct15_Non-Metals_and_Their_Compounds", title: "CT 15: Non-Metals & Their Compounds I" },
+            { id: 16, slug: "ct16_Non-Metals_and_Their_Compounds", title: "CT 16: Non-Metals & Their Compounds II" }
+        ];
+
+        let currentMainTab = 'GAT';
+        let currentGatSubject = 'English';
+
+        // 1. Initial Load
+        window.addEventListener('DOMContentLoaded', () => {
+            renderGatSubjects();
+            updateView();
+        });
+
+        // 2. Switch Between GAT and MAT
+        function switchMainTab(tab) {
+            currentMainTab = tab;
+
+            // UI Updates
+            document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(`toggle-${tab.toLowerCase()}`).classList.add('active');
+
+            document.querySelectorAll('.view-pane').forEach(p => p.classList.remove('active'));
+            document.getElementById(`pane-${tab.toLowerCase()}`).classList.add('active');
+
+            updateView();
+        }
+
+        // 3. Render GAT Subject Blocks
+        function renderGatSubjects() {
+            const container = document.getElementById('gat-subjects-container');
+            container.innerHTML = disciplines.map(d => `
+                <div class="gat-sub-block ${d === currentGatSubject ? 'active' : ''}" 
+                     onclick="switchGatSubject('${d}', this)">
+                    ${d}
+                </div>
+            `).join('');
+        }
+
+        function switchGatSubject(subject, element) {
+            currentGatSubject = subject;
+            document.querySelectorAll('.gat-sub-block').forEach(b => b.classList.remove('active'));
+            element.classList.add('active');
+            updateView();
+        }
+
+        // 4. Update Cards Based on Selection
+        function updateView() {
+            if (currentMainTab === 'MAT') {
+                renderMathCards();
+            } else {
+                renderGatCards();
+            }
+        }
+
+        function renderMathCards() {
+            const container = document.getElementById('mat-cards-container');
+            container.innerHTML = mathChapters.map(item => {
+                if (item.category) {
+                    return `<div class="section-header-compact" style="margin-top: 24px;">${item.category}</div>`;
+                }
+
+                // List of IDs that have data files in /data/chapter_test_mat/
+                const availableIds = [1, 2, 3, 5, 6];
+                const isAvailable = availableIds.includes(item.id);
+
+                return `
+                    <div class="ct-card" ${!isAvailable ? 'style="opacity: 0.8;"' : ''}>
+                        <div class="ct-card-main">
+                            <div class="ct-info">
+                                ${isAvailable ? '<div class="ct-badges"><span class="ct-badge-free">Free</span></div>' : ''}
+                                <div class="ct-name">${item.title}</div>
+                                <div class="ct-meta">10 Qs · 13 mins · 25.0 Marks</div>
+                            </div>
+                            <div class="ct-cta ${!isAvailable ? 'coming-soon' : ''}" 
+                                 onclick="${isAvailable ? `window.location.href='instructions.html?type=ChapterTest&subject=Mathematics&chapter=${item.slug}'` : ''}">
+                                ${isAvailable ? 'Start Test' : 'Coming Soon'}
+                            </div>
+                        </div>
+                        <div class="ct-footer-strip">
+                            <span class="ct-lang">Syllabus · English, Hindi</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderGatCards() {
+            const container = document.getElementById('gat-cards-container');
+            if (currentGatSubject === 'English') {
+                container.innerHTML = `
+                    <div class="ct-card">
+                        <div class="ct-card-main">
+                            <div class="ct-info">
+                                <div class="ct-badges"><span class="ct-badge-free">Free</span></div>
+                                <div class="ct-name">UPSC NDA 01/2026: CT 01: Synonyms</div>
+                                <div class="ct-meta">10 Qs · 10 mins · 40.0 Marks</div>
+                            </div>
+                            <div class="ct-cta" onclick="window.location.href='instructions.html'">Start Test</div>
+                        </div>
+                        <div class="ct-footer-strip">
+                            <span class="ct-lang">Syllabus · English</span>
+                        </div>
+                    </div>
+                `;
+            } else if (currentGatSubject === 'Physics') {
+                container.innerHTML = physicsChapters.map(chapter => {
+                    const isAvailable = chapter.id <= 10; // Chapters 1-10 are uploaded
+                    return `
+                    <div class="ct-card" ${!isAvailable ? 'style="opacity: 0.8;"' : ''}>
+                        <div class="ct-card-main">
+                            <div class="ct-info">
+                                ${isAvailable ? '<div class="ct-badges"><span class="ct-badge-free">Free</span></div>' : ''}
+                                <div class="ct-name">${chapter.title}</div>
+                                <div class="ct-meta">10 Qs · 13 mins · 40.0 Marks</div>
+                            </div>
+                            <div class="ct-cta ${!isAvailable ? 'coming-soon' : ''}" 
+                                 onclick="${isAvailable ? `window.location.href='instructions.html?type=ChapterTest&subject=Physics&chapter=${chapter.slug}'` : ''}">
+                                ${isAvailable ? 'Start Test' : 'Coming Soon'}
+                            </div>
+                        </div>
+                        <div class="ct-footer-strip">
+                            <span class="ct-lang">Syllabus · English, Hindi</span>
+                        </div>
+                    </div>
+                `;
+                }).join('');
+            } else if (currentGatSubject === 'Chemistry') {
+                container.innerHTML = chemistryChapters.map(chapter => {
+                    const isAvailable = chapter.id !== 9; // All except CT 9 are uploaded
+                    return `
+                    <div class="ct-card" ${!isAvailable ? 'style="opacity: 0.8;"' : ''}>
+                        <div class="ct-card-main">
+                            <div class="ct-info">
+                                ${isAvailable ? '<div class="ct-badges"><span class="ct-badge-free">Free</span></div>' : ''}
+                                <div class="ct-name">${chapter.title}</div>
+                                <div class="ct-meta">10 Qs · 10 mins · 40.0 Marks</div>
+                            </div>
+                            <div class="ct-cta ${!isAvailable ? 'coming-soon' : ''}" 
+                                 onclick="${isAvailable ? `window.location.href='instructions.html?type=ChapterTest&subject=Chemistry&chapter=${chapter.slug}'` : ''}">
+                                ${isAvailable ? 'Start Test' : 'Coming Soon'}
+                            </div>
+                        </div>
+                        <div class="ct-footer-strip">
+                            <span class="ct-lang">Syllabus · English, Hindi</span>
+                        </div>
+                    </div>
+                `;
+                }).join('');
+            } else {
+                container.innerHTML = `
+                    <div class="ct-card" style="opacity: 0.8;">
+                        <div class="ct-card-main">
+                            <div class="ct-info">
+                                <div class="ct-name">${currentGatSubject} Chapter 1</div>
+                                <div class="ct-meta">10 Qs · 10 mins · 40 Marks</div>
+                            </div>
+                            <div class="ct-cta coming-soon">Coming Soon</div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+
+</html>

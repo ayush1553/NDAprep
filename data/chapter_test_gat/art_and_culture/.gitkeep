@@ -1,0 +1,5 @@
+// GAT Art & Culture Chapter Test Data Placeholder
+const chapterTestData = {
+    title: "Art & Culture Chapter Test",
+    questions: []
+};

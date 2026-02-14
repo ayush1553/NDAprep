@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NDAPrep - Updates & Info</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+<style>
+
+/* ================= GLOBAL ================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background: linear-gradient(135deg,#0f172a,#1e3a8a 40%,#2563eb);
+    color:white;
+    padding-top:70px;
+}
+
+/* ================= NAVBAR ================= */
+
+.navbar{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:70px;
+    background:linear-gradient(90deg,#0f1c3f,#08142e);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 20px;
+    z-index:1000;
+}
+
+.nav-left{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo-circle{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    overflow:hidden;
+}
+
+.logo-circle img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.nav-title{
+    font-size:20px;
+    font-weight:600;
+}
+
+.menu-btn{
+    width:42px;
+    height:42px;
+    background:#1e2d5a;
+    border:none;
+    border-radius:12px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:5px;
+    cursor:pointer;
+}
+
+.menu-btn span{
+    width:20px;
+    height:2px;
+    background:white;
+}
+
+/* ================= CONTAINER ================= */
+
+.container{
+    max-width:950px;
+    margin:auto;
+    padding:30px 20px 60px;
+}
+
+/* ================= SECTION TITLE ================= */
+
+.section-heading{
+    font-size:20px;
+    font-weight:600;
+    margin-bottom:20px;
+}
+
+/* ================= OVERVIEW CARD ================= */
+
+.overview-card{
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(15px);
+    border-radius:22px;
+    padding:25px;
+    border:1px solid rgba(255,255,255,0.12);
+    box-shadow:0 10px 25px rgba(0,0,0,0.25);
+    margin-bottom:30px;
+}
+
+.overview-item{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:18px 0;
+}
+
+.overview-item:not(:last-child){
+    border-bottom:1px solid rgba(255,255,255,0.08);
+}
+
+.left-part{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.icon-circle{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(255,255,255,0.12);
+}
+
+.overview-label{
+    font-size:14px;
+    opacity:0.7;
+}
+
+.overview-value{
+    font-size:17px;
+    font-weight:600;
+}
+
+/* ================= NOTIFICATION CARD ================= */
+
+.notification-card{
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(15px);
+    border-radius:22px;
+    padding:22px;
+    border:1px solid rgba(255,255,255,0.12);
+    box-shadow:0 10px 25px rgba(0,0,0,0.25);
+    margin-bottom:35px;
+}
+
+.notification-title{
+    font-size:15px;
+    margin-bottom:15px;
+}
+
+.download-link{
+    color:#60a5fa;
+    font-weight:500;
+    cursor:pointer;
+}
+
+/* ================= IMPORTANT LINKS ================= */
+
+.links-section{
+    background:rgba(255,255,255,0.06);
+    backdrop-filter:blur(10px);
+    border-radius:20px;
+    border:1px solid rgba(255,255,255,0.08);
+    overflow:hidden;
+}
+
+.link-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 20px;
+    font-size:15px;
+    cursor:pointer;
+    transition:0.2s ease;
+}
+
+.link-item:not(:last-child){
+    border-bottom:1px solid rgba(255,255,255,0.06);
+}
+
+.link-item:hover{
+    background:rgba(255,255,255,0.08);
+}
+
+.link-item i{
+    opacity:0.6;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:600px){
+
+    .overview-value{
+        font-size:15px;
+    }
+
+    .link-item{
+        font-size:14px;
+    }
+
+}
+
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-left">
+        <div class="logo-circle">
+            <img src="nda_logo.jpeg" alt="logo">
+        </div>
+        <div class="nav-title">NDAPrep</div>
+    </div>
+
+    <button class="menu-btn">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+</nav>
+
+<div class="container">
+
+    <div class="section-heading">Exam Overview</div>
+
+    <div class="overview-card">
+
+        <div class="overview-item">
+            <div class="left-part">
+                <div class="icon-circle"><i class="fa-regular fa-calendar"></i></div>
+                <div>
+                    <div class="overview-label">Registration Dates</div>
+                    <div class="overview-value">10 Dec - 30 Dec, 2025</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="overview-item">
+            <div class="left-part">
+                <div class="icon-circle"><i class="fa-solid fa-users"></i></div>
+                <div>
+                    <div class="overview-label">Vacancies</div>
+                    <div class="overview-value">394</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="overview-item">
+            <div class="left-part">
+                <div class="icon-circle"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+                <div>
+                    <div class="overview-label">Salary</div>
+                    <div class="overview-value">₹56,100 - ₹1,77,500</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="overview-item">
+            <div class="left-part">
+                <div class="icon-circle"><i class="fa-solid fa-graduation-cap"></i></div>
+                <div>
+                    <div class="overview-label">Qualification</div>
+                    <div class="overview-value">12th Pass</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="notification-card">
+        <div class="notification-title">
+            Official Notification for NDA has been released
+        </div>
+        <div class="download-link">
+            Download Notification
+        </div>
+    </div>
+
+    <div class="section-heading">Important Links</div>
+
+    <div class="links-section">
+
+        <div class="link-item">Result <i class="fa-solid fa-chevron-right"></i></div>
+        <div class="link-item">Admit Card <i class="fa-solid fa-chevron-right"></i></div>
+        <div class="link-item">Application Form <i class="fa-solid fa-chevron-right"></i></div>
+        <div class="link-item">Eligibility <i class="fa-solid fa-chevron-right"></i></div>
+        <div class="link-item">Salary <i class="fa-solid fa-chevron-right"></i></div>
+        <div class="link-item">Syllabus <i class="fa-solid fa-chevron-right"></i></div>
+        <div class="link-item">Exam Pattern <i class="fa-solid fa-chevron-right"></i></div>
+        <div class="link-item">Cut Off <i class="fa-solid fa-chevron-right"></i></div>
+        <div class="link-item">Answer Key <i class="fa-solid fa-chevron-right"></i></div>
+        <div class="link-item">Exam Analysis <i class="fa-solid fa-chevron-right"></i></div>
+        <div class="link-item">Previous Year Papers <i class="fa-solid fa-chevron-right"></i></div>
+        <div class="link-item">Books <i class="fa-solid fa-chevron-right"></i></div>
+        <div class="link-item">Preparation Tips <i class="fa-solid fa-chevron-right"></i></div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

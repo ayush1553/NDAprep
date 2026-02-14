@@ -1,0 +1,5 @@
+// GAT General Science Chapter Test Data Placeholder
+const chapterTestData = {
+    title: "General Science Chapter Test",
+    questions: []
+};

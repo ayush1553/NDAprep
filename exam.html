@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NDA Exam Interface</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="exam.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body class="exam-body">
+
+    <!-- EXAM HEADER (Exact Match) -->
+    <header class="exam-header">
+        <div class="header-left">
+            <button class="icon-btn btn-pause" id="btn-pause" title="Pause Exam">
+                <i class="fa-solid fa-pause"></i>
+            </button>
+        </div>
+        <div class="header-center">
+            <div class="exam-timer" id="timer">00:20:01</div>
+            <div class="exam-name-text" id="exam-name-display">NDA 1 2025: Mathematics Live ...</div>
+        </div>
+        <div class="header-right">
+            <button class="palette-toggle" id="palette-toggle" title="Show Question Palette">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- EXAM LAYOUT -->
+    <div class="exam-layout">
+        <div class="palette-backdrop" id="palette-backdrop"></div>
+
+        <!-- LEFT: QUESTION PANEL -->
+        <main class="question-panel">
+            <div class="question-header">
+                <div class="info-row">
+                    <div class="info-left">
+                        <span class="q-badge-circular" id="q-number-badge">1</span>
+                        <div class="info-divider"></div>
+                        <div class="q-timer-current">
+                            <i class="fa-regular fa-clock"></i>
+                            <span id="q-timer-text">00:04</span>
+                        </div>
+                    </div>
+                    <div class="info-center">
+                        <div class="marks-pills">
+                            <span class="pill pill-pos" id="q-marks-pos">+ 3.0</span>
+                            <span class="pill pill-neg" id="q-marks-neg">- 1.0</span>
+                        </div>
+                    </div>
+                    <div class="info-right">
+                        <button class="info-action-btn btn-warning" id="btn-warning" title="Report Issue">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </button>
+                        <button class="info-action-btn btn-bookmark" id="btn-bookmark" title="Bookmark Question">
+                            <i class="fa-solid fa-flag"></i>
+                        </button>
+                        <button class="info-action-btn btn-star" id="btn-star" title="Mark for Review">
+                            <i class="fa-solid fa-star"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-content" id="question-content">
+                <p>Loading Question...</p>
+            </div>
+
+            <div class="options-list">
+                <!-- Options rendered via JS -->
+            </div>
+
+            <!-- Image Modal for Tap-to-Expand -->
+            <div id="image-modal" class="image-modal">
+                <span class="close-modal">&times;</span>
+                <img class="modal-content" id="img-expanded">
+                <div id="modal-caption"></div>
+            </div>
+
+            <div class="action-bar">
+                <div class="action-buttons-container">
+                    <button class="btn-action btn-mark-next" id="btn-mark-extra">Mark & Next</button>
+                    <button class="btn-action btn-clear-response" id="btn-clear-extra">Clear</button>
+                    <button class="btn-action btn-save-next btn-primary" id="btn-next">Save & Next</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- RIGHT: PALETTE (Exact Match) -->
+        <aside class="palette-panel">
+            <div class="palette-tabs">
+                <div class="tab active" data-view="grid">Grid View</div>
+                <div class="tab" data-view="list">List View</div>
+            </div>
+
+            <div class="palette-scroll-area">
+                <div class="palette-instructions">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <span class="text">View Instructions</span>
+                </div>
+
+                <div class="palette-legend-refined">
+                    <div class="legend-row">
+                        <div class="legend-item"><span class="sym sym-marked"><i class="fa-solid fa-star"></i></span>
+                            <span class="lbl">Marked for Review</span></div>
+                        <div class="legend-item"><span class="sym sym-unattempted"><i
+                                    class="fa-solid fa-circle"></i></span> <span class="lbl">Unattempted</span></div>
+                    </div>
+                    <div class="legend-row">
+                        <div class="legend-item"><span class="sym sym-unseen"><i
+                                    class="fa-regular fa-circle"></i></span> <span class="lbl">Unseen</span>
+                        </div>
+                        <div class="legend-item"><span class="sym sym-attempted"><i
+                                    class="fa-solid fa-circle"></i></span> <span class="lbl">Attempted</span></div>
+                    </div>
+                </div>
+
+                <div class="test-section-header">
+                    <span class="title">Test</span>
+                    <span class="arrow">⌄</span>
+                </div>
+
+                <div class="status-count-row">
+                    <div class="count-item"><span class="sym sym-marked"><i class="fa-solid fa-star"></i></span> <span
+                            id="count-marked">0</span></div>
+                    <div class="count-item"><span class="sym sym-attempted"><i class="fa-solid fa-circle"></i></span>
+                        <span id="count-attempted">0</span>
+                    </div>
+                    <div class="count-item"><span class="sym sym-unattempted"><i class="fa-solid fa-circle"></i></span>
+                        <span id="count-unattempted">0</span></div>
+                    <div class="count-item"><span class="sym sym-unseen"><i class="fa-regular fa-circle"></i></span>
+                        <span id="count-unseen">0</span></div>
+                </div>
+
+                <div class="palette-grid circular-grid" id="palette-grid">
+                    <!-- Generated via JS -->
+                </div>
+            </div>
+
+            <div class="palette-footer-fixed">
+                <button class="btn-submit-palette" onclick="submitExam()">SUBMIT TEST</button>
+            </div>
+        </aside>
+
+        <!-- OFFICIAL INSTRUCTIONS MODAL -->
+        <div class="instructions-overlay" id="instructions-modal">
+            <div class="instructions-container">
+                <header class="ins-header">
+                    <h1 id="ins-exam-title">NDA I 2025 – General Ability Test</h1>
+                    <div class="ins-meta-row">
+                        <span class="meta-item">Duration: 150 Minutes</span>
+                        <span class="meta-item">Maximum Marks: 600</span>
+                    </div>
+                </header>
+
+                <div class="ins-content">
+                    <ul class="ins-list">
+                        <li>The test contains 150 total questions.</li>
+                        <li>Each question has four options, out of which only one is correct.</li>
+                        <li>You must complete the test within the allotted time.</li>
+                        <li>For each correct answer, marks will be awarded as per the marking scheme (+4.0).</li>
+                        <li>Negative marking will apply for incorrect answers (-1.33).</li>
+                        <li>No marks will be deducted for unattempted questions.</li>
+                        <li>You may mark questions for review and return to them later.</li>
+                        <li>The test can be attempted only once.</li>
+                        <li>Ensure you submit the test before exiting or closing the browser.</li>
+                        <li>Use of unfair means will lead to disqualification.</li>
+                        <li>The decision of the examination authority will be final.</li>
+                    </ul>
+
+                    <div class="ins-declaration">
+                        <p>I have read all the instructions carefully and understood them. I agree to abide by the rules
+                            and regulations of the examination. I am aware that any violation of the rules may lead to
+                            disqualification.</p>
+                    </div>
+                </div>
+
+                <div class="ins-footer">
+                    <button class="btn-proceed-test" id="btn-close-instructions">Proceed to Test</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SUBMIT CONFIRMATION MODAL -->
+        <div class="modal-overlay" id="submit-modal">
+            <div class="submit-modal-container">
+                <div class="submit-summary">
+                    <div class="summary-row">
+                        <div class="row-label"><i class="fa-regular fa-clock"></i> Time Left</div>
+                        <div class="row-value accent" id="modal-time-left">00:00:00</div>
+                    </div>
+                    <div class="summary-row">
+                        <div class="row-label"><i class="fa-solid fa-check"></i> Attempted</div>
+                        <div class="row-value" id="modal-attempted">0</div>
+                    </div>
+                    <div class="summary-row">
+                        <div class="row-label"><i class="fa-solid fa-circle-minus"></i> Unattempted</div>
+                        <div class="row-value" id="modal-unattempted">0</div>
+                    </div>
+                    <div class="summary-row">
+                        <div class="row-label"><i class="fa-solid fa-star"></i> Marked</div>
+                        <div class="row-value" id="modal-marked">0</div>
+                    </div>
+                </div>
+
+                <div class="submit-question">
+                    <h3>Are you sure you want to submit the test?</h3>
+                </div>
+
+                <div class="submit-actions">
+                    <button class="btn-confirm-yes" id="btn-submit-confirm-yes">Yes</button>
+                    <button class="btn-confirm-no" id="btn-submit-confirm-no">No</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- EXAM SCRIPT -->
+    <script src="auth.js"></script>
+    <script src="db.js"></script>
+    <script>
+        // Dynamic Question Data Loader
+        const params = new URLSearchParams(window.location.search);
+        const type = params.get('type') || 'PYQ';
+        const subj = params.get('subject') || 'Mathematics';
+        const yr = params.get('year') || '2022';
+        const sess = params.get('session') || '2';
+        const chapter = params.get('chapter');
+        const mockSlug = params.get('slug');
+
+        const script = document.createElement('script');
+
+        if (type === 'ChapterTest') {
+            if (subj === 'Mathematics') {
+                script.src = `data/chapter_test_mat/${chapter}.js`;
+            } else {
+                // GAT subjects use subfolders (e.g., Physics -> physics)
+                const subfolder = subj.toLowerCase().replace(/ & /g, '_and_').replace(/ /g, '_');
+                script.src = `data/chapter_test_gat/${subfolder}/${chapter}.js`;
+            }
+        } else if (type === 'Mock') {
+            const folder = subj === 'Mathematics' ? 'mock_test_mat' : 'mock_test_gat';
+            script.src = `data/${folder}/${mockSlug}.js`;
+        } else {
+            script.src = `data/questions/${subj}_${yr}_${sess}.js`;
+        }
+
+        script.onload = () => {
+            console.log("Questions data loaded:", type, subj, chapter || `${yr}_${sess}`);
+            // Load exam.js only after data is ready
+            const examScript = document.createElement('script');
+            examScript.src = "exam.js";
+            document.body.appendChild(examScript);
+        };
+        script.onerror = () => {
+            alert("Error: Questions for this set are not available yet.");
+            window.location.href = type === 'ChapterTest' ? 'chapter_tests.html' : 'pyqs.html';
+        };
+        document.head.appendChild(script);
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis - NDA Prep</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="result.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body class="analysis-theme">
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+        <div class="brand">
+            <div class="logo"><img src="nda_logo.jpeg" alt="NDA"></div>
+            <span>NDAPrep</span>
+        </div>
+        <div class="menu" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></div>
+    </header>
+
+    <!-- NAVIGATION MENU -->
+    <div class="nav-overlay" id="navOverlay">
+        <div class="nav-content">
+            <div class="nav-header">
+                <span class="nav-title">Menu</span>
+                <span class="close-menu" onclick="toggleMenu()"><i class="fa-solid fa-xmark"></i></span>
+            </div>
+            <ul class="nav-links">
+                <!-- User Profile Section -->
+                <li id="user-display" style="display: none;">
+                    <i class="fa-solid fa-circle-user icon"></i>
+                </li>
+
+                <li><a href="index.html"><i class="fa-solid fa-house icon"></i> Home Page</a></li>
+                <li><a href="mock-tests.html"><i class="fa-solid fa-clipboard-list icon"></i> Mock Tests</a></li>
+                <li><a href="pyqs.html"><i class="fa-solid fa-file-lines icon"></i> Previous Year Papers</a></li>
+                <li><a href="chapter_tests.html"><i class="fa-solid fa-book-open icon"></i> Chapter Tests</a></li>
+                <li><a href="performance.html"><i class="fa-solid fa-chart-simple icon"></i> Performance Analysis</a>
+                </li>
+
+                <li id="login-link"><a href="login.html"><i class="fa-solid fa-right-to-bracket icon"></i> Login</a>
+                </li>
+                <li id="signup-link"><a href="signup.html"><i class="fa-solid fa-user-plus icon"></i> Sign Up</a></li>
+                <li id="logout-link" style="display: none;"><a href="#" onclick="Auth.logout()"><i
+                            class="fa-solid fa-sign-out-alt icon"></i> Logout</a></li>
+
+                <li><a href="#"><i class="fa-solid fa-circle-info icon"></i> Update & Info</a></li>
+            </ul>
+        </div>
+    </div>
+    </div>
+
+    <div class="app-sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+    <!-- TOP NAVIGATION TABS -->
+    <nav class="analysis-tabs">
+        <div class="tab-item active" onclick="switchTab('analysis')">Analysis</div>
+        <div class="tab-item" onclick="switchTab('solutions')">Solutions</div>
+        <div class="tab-item disabled" onclick="">Leaderboard</div>
+    </nav>
+
+    <div class="analysis-container">
+
+        <!-- SECTION 1: ANALYSIS VIEW -->
+        <section id="tab-analysis" class="tab-content active">
+
+            <!-- Primary Action Bar -->
+            <div class="reattempt-container">
+                <button class="reattempt-btn" onclick="reattemptTest()">
+                    <span class="btn-text">Reattempt Test</span>
+                    <i class="fa-solid fa-arrow-rotate-right btn-icon"></i>
+                </button>
+                <div class="reattempt-bg-icon"><i class="fa-solid fa-pen-to-square"></i></div>
+            </div>
+
+            <h3 class="section-heading">QUICK SUMMARY</h3>
+
+            <div class="metrics-stack">
+
+                <!-- Score Card -->
+                <div class="metric-card-new">
+                    <div class="icon-box score-icon"><i class="fa-solid fa-trophy"></i></div>
+                    <div class="card-content">
+                        <span class="card-label">Score</span>
+                        <div class="card-value-group">
+                            <span class="value-main" id="val-score">--</span>
+                            <span class="value-sub" id="val-total-score">/--</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accuracy Card -->
+                <div class="metric-card-new">
+                    <div class="icon-box accuracy-icon"><i class="fa-solid fa-bullseye"></i></div>
+                    <div class="card-content">
+                        <span class="card-label">Accuracy</span>
+                        <div class="card-value-group">
+                            <span class="value-main" id="val-accuracy">--</span>
+                            <span class="value-unit">%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Questions Attempted Card -->
+                <div class="metric-card-new stack-col">
+                    <div class="card-top-row">
+                        <div class="icon-box attempted-icon"><i class="fa-solid fa-list-check"></i></div>
+                        <div class="card-content">
+                            <span class="card-label">Qs. Attempted</span>
+                            <div class="card-value-group">
+                                <span class="value-main" id="val-attempted">--</span>
+                                <span class="value-sub" id="val-total-questions">/--</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Breakdown Chips inside the card -->
+                    <div class="breakdown-chips">
+                        <div class="status-chip chip-correct">
+                            <span class="chip-icon"><i class="fa-solid fa-check"></i></span> Correct: <span
+                                id="count-correct">--</span>
+                        </div>
+                        <div class="status-chip chip-incorrect">
+                            <span class="chip-icon"><i class="fa-solid fa-xmark"></i></span> Incorrect: <span
+                                id="count-incorrect">--</span>
+                        </div>
+                        <div class="status-chip chip-unattempted">
+                            <span class="chip-icon"><i class="fa-regular fa-circle"></i></span> Unattempted: <span
+                                id="count-unattempted">--</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- NEW SECTION: COMPARE WITH HISTORY -->
+            <div class="analysis-section" id="section-compare">
+                <h3 class="section-heading">COMPARE</h3>
+
+                <div class="compare-card">
+                    <!-- Toggles -->
+                    <div class="compare-toggles">
+                        <button class="comp-toggle" data-metric="score"
+                            onclick="switchCompareMetric('score')">Score</button>
+                        <button class="comp-toggle" data-metric="accuracy"
+                            onclick="switchCompareMetric('accuracy')">Accuracy</button>
+                        <button class="comp-toggle" data-metric="attempted"
+                            onclick="switchCompareMetric('attempted')">Attempt</button>
+                        <button class="comp-toggle" data-metric="correct"
+                            onclick="switchCompareMetric('correct')">Correct</button>
+                        <button class="comp-toggle" data-metric="incorrect"
+                            onclick="switchCompareMetric('incorrect')">Incorrect</button>
+                        <button class="comp-toggle" data-metric="time"
+                            onclick="switchCompareMetric('time')">Time</button>
+                    </div>
+
+                    <!-- Chart Area -->
+                    <div class="compare-chart-container">
+                        <div class="chart-y-axis">
+                            <!-- Populated by JS -->
+                        </div>
+                        <div class="chart-bars-area" id="compare-bars-area">
+                            <!-- Bars injected by JS: 
+                                 <div class="bar-group">
+                                    <div class="bar-fill"></div>
+                                    <span class="bar-label">You</span>
+                                 </div> 
+                            -->
+                            <div class="empty-state">Loading comparison...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NEW SECTION: STRENGTHS & WEAKNESSES -->
+            <div class="analysis-section" id="section-strengths">
+                <h3 class="section-heading">STRENGTHS AND WEAKNESSES</h3>
+
+                <div class="sw-toggle-container">
+                    <button class="sw-toggle active" onclick="toggleSW('weak')">Weakness</button>
+                    <button class="sw-toggle" onclick="toggleSW('strong')">Strength</button>
+                </div>
+
+                <div id="list-weak" class="sw-list active">
+                    <!-- Loaded via JS -->
+                    <div class="empty-state">No weak topics found.</div>
+                </div>
+
+                <div id="list-strong" class="sw-list">
+                    <!-- Loaded via JS -->
+                    <div class="empty-state">No strong topics found. Keep practicing!</div>
+                </div>
+            </div>
+
+            <!-- NEW SECTION: DETAILED TOPIC ANALYSIS -->
+            <div class="analysis-section" id="section-detailed">
+                <h3 class="section-heading">DETAILED TOPIC ANALYSIS</h3>
+                <div id="topic-accordion-container">
+                    <!-- Loaded via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: SOLUTIONS VIEW -->
+        <section id="tab-solutions" class="tab-content">
+            <div class="filter-wrapper">
+                <div class="filter-row">
+                    <div class="pill active" onclick="filterSolutions('all')">All (<span id="chip-all">--</span>)</div>
+                    <div class="pill" onclick="filterSolutions('incorrect')">Incorrect (<span
+                            id="chip-incorrect">--</span>)</div>
+                    <div class="pill" onclick="filterSolutions('unattempted')">Unattempted (<span
+                            id="chip-unattempted">--</span>)</div>
+                </div>
+            </div>
+
+            <div class="question-count-info" id="sol-total-count">20 Questions</div>
+
+            <div class="solutions-list" id="solutions-container">
+                <!-- Loaded via JS -->
+            </div>
+        </section>
+
+        <!-- SECTION 3: LEADERBOARD VIEW (Optional/Placeholder) -->
+        <section id="tab-leaderboard" class="tab-content">
+            <div class="leaderboard-placeholder">
+                <p>Leaderboard functionality will be available in the next update.</p>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="auth.js"></script>
+    <script src="db.js"></script>
+    <script src="result.js"></script>
+</body>
+
+</html>

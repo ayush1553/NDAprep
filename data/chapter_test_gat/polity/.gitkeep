@@ -1,0 +1,5 @@
+// GAT Polity Chapter Test Data Placeholder
+const chapterTestData = {
+    title: "Polity Chapter Test",
+    questions: []
+};

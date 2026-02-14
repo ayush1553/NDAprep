@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics - NDA Prep</title>
+    <meta name="description" content="Study Mathematics for NDA. Notes, PYQs, Quizzes, and Mock Tests.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+        <div class="brand">
+            <div class="logo"><img src="nda_logo.jpeg" alt="NDA"></div>
+            <span>NDAPrep</span>
+        </div>
+        <div class="menu" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></div>
+    </header>
+
+    <!-- NAVIGATION MENU -->
+    <div class="nav-overlay" id="navOverlay">
+        <div class="nav-content">
+            <div class="nav-header">
+                <span class="nav-title">Menu</span>
+                <span class="close-menu" onclick="toggleMenu()"><i class="fa-solid fa-xmark"></i></span>
+            </div>
+            <ul class="nav-links">
+                <!-- User Profile Section -->
+                <li id="user-display" style="display: none;">
+                    <i class="fa-solid fa-circle-user icon"></i>
+                </li>
+
+                <li><a href="index.html"><i class="fa-solid fa-house icon"></i> Home Page</a></li>
+                <li><a href="mock-tests.html"><i class="fa-solid fa-clipboard-list icon"></i> Mock Tests</a></li>
+                <li><a href="pyqs.html"><i class="fa-solid fa-file-lines icon"></i> Previous Year Papers</a></li>
+                <li><a href="chapter_tests.html"><i class="fa-solid fa-book-open icon"></i> Chapter Tests</a></li>
+                <li><a href="performance.html"><i class="fa-solid fa-chart-simple icon"></i> Performance Analysis</a>
+                </li>
+
+                <li id="login-link"><a href="login.html"><i class="fa-solid fa-right-to-bracket icon"></i> Login</a>
+                </li>
+                <li id="signup-link"><a href="signup.html"><i class="fa-solid fa-user-plus icon"></i> Sign Up</a></li>
+                <li id="logout-link" style="display: none;"><a href="#" onclick="Auth.logout()"><i
+                            class="fa-solid fa-sign-out-alt icon"></i> Logout</a></li>
+
+                <li><a href="#"><i class="fa-solid fa-circle-info icon"></i> Update & Info</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- SUBJECT PAGE CONTAINER -->
+    <div class="subject-container container">
+
+        <!-- SIDEBAR TOGGLE (Mobile Only) -->
+        <button class="sidebar-toggle-btn">
+            <span>Subject Syllabus</span>
+            <span class="chevron">▼</span>
+        </button>
+
+        <!-- LEFT SIDEBAR -->
+        <aside class="syllabus-sidebar">
+            <div class="sidebar-header">
+                <h2>Mathematics</h2>
+            </div>
+            <ul class="syllabus-tree">
+                <li class="tree-item active">
+                    <div class="tree-header">
+                        <span>Trigonometry</span>
+                        <span class="chevron expanded">▼</span>
+                    </div>
+                    <ul class="submenu">
+                        <li class="active-topic">Angles & Measurements</li>
+                        <li>Trigonometric Ratios</li>
+                        <li>Heights and Distances</li>
+                        <li>Inverse Trigonometry</li>
+                    </ul>
+                </li>
+                <li class="tree-item">
+                    <div class="tree-header">
+                        <span>Algebra</span>
+                        <span class="chevron">▶</span>
+                    </div>
+                </li>
+                <li class="tree-item">
+                    <div class="tree-header">
+                        <span>Differential Calculus</span>
+                        <span class="chevron">▶</span>
+                    </div>
+                </li>
+                <li class="tree-item">
+                    <div class="tree-header">
+                        <span>Integral Calculus</span>
+                        <span class="chevron">▶</span>
+                    </div>
+                </li>
+                <li class="tree-item">
+                    <div class="tree-header">
+                        <span>Vector Algebra</span>
+                        <span class="chevron">▶</span>
+                    </div>
+                </li>
+                <li class="tree-item">
+                    <div class="tree-header">
+                        <span>Statistics & Probability</span>
+                        <span class="chevron">▶</span>
+                    </div>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="subject-content">
+            <!-- Breadcrumbs -->
+            <div class="breadcrumbs">
+                <a href="index.html">Home</a> <span class="separator">/</span>
+                <a href="#">Mathematics</a> <span class="separator">/</span>
+                <span class="current">Trigonometry</span>
+            </div>
+
+            <div class="topic-header">
+                <h1>Trigonometry: Angles & Measurements</h1>
+            </div>
+
+            <!-- TABS -->
+            <div class="tabs-nav">
+                <button class="tab-btn active" data-tab="notes">Notes</button>
+                <button class="tab-btn" data-tab="pyqs"><a href="pyqs.html">PYQs</a></button>
+                <button class="tab-btn" data-tab="quiz">Practice Quiz</button>
+                <button class="tab-btn" data-tab="mock">Mock Tests</button>
+            </div>
+
+            <!-- TAB PANELS -->
+
+            <!-- 1. NOTES TAB -->
+            <div id="notes" class="tab-panel active">
+                <div class="card-list">
+                    <div class="content-card">
+                        <div class="card-icon pdf-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10 9 9 9 8 9"></polyline>
+                            </svg>
+                        </div>
+                        <div class="card-info">
+                            <h3>Trigonometry Basics & Formulas</h3>
+                            <span class="badge lang-badge">English</span>
+                        </div>
+                        <div class="card-actions">
+                            <a href="#" class="btn-text">View</a>
+                        </div>
+                    </div>
+                    <div class="content-card">
+                        <div class="card-icon pdf-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10 9 9 9 8 9"></polyline>
+                            </svg>
+                        </div>
+                        <div class="card-info">
+                            <h3>Quick Revision Sheet (Hindi)</h3>
+                            <span class="badge lang-badge">हिंदी</span>
+                        </div>
+                        <div class="card-actions">
+                            <a href="#" class="btn-text">View</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. PYQS TAB -->
+            <div id="pyqs" class="tab-panel">
+                <div class="pyq-list">
+                    <div class="pyq-year-group">
+                        <div class="pyq-header expanded">
+                            <h3>NDA II 2023</h3>
+                            <span class="chevron">▼</span>
+                        </div>
+                        <div class="pyq-content">
+                            <div class="pyq-item">
+                                <div class="pyq-details">
+                                    <span class="q-count">5 Questions</span>
+                                    <span class="topic-tag">Angles</span>
+                                </div>
+                                <button class="btn-sm btn-outline">Attempt as Quiz</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pyq-year-group">
+                        <div class="pyq-header">
+                            <h3>NDA I 2023</h3>
+                            <span class="chevron">▶</span>
+                        </div>
+                    </div>
+                    <div class="pyq-year-group">
+                        <div class="pyq-header">
+                            <h3>NDA II 2022</h3>
+                            <span class="chevron">▶</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. QUIZ TAB -->
+            <div id="quiz" class="tab-panel">
+                <div class="quiz-grid">
+                    <div class="quiz-card">
+                        <div class="quiz-meta">
+                            <span class="badge difficulty-easy">Easy</span>
+                            <span class="q-count">10 Qs</span>
+                        </div>
+                        <h3>Trigonometry Foundations</h3>
+                        <p class="time-limit">15 Mins</p>
+                        <button class="btn btn-primary full-width">Start Quiz</button>
+                    </div>
+                    <div class="quiz-card">
+                        <div class="quiz-meta">
+                            <span class="badge difficulty-medium">Medium</span>
+                            <span class="q-count">20 Qs</span>
+                        </div>
+                        <h3>Identities & Equations</h3>
+                        <p class="time-limit">30 Mins</p>
+                        <button class="btn btn-primary full-width">Start Quiz</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. MOCK TEST TAB -->
+            <div id="mock" class="tab-panel">
+                <div class="mock-grid">
+                    <div class="quiz-card mock-card">
+                        <div class="quiz-meta">
+                            <span class="badge mock-badge">Sectional Test</span>
+                        </div>
+                        <h3>Mathematics: Full Syllabus Test 1</h3>
+                        <ul class="mock-details">
+                            <li>120 Questions</li>
+                            <li>300 Marks</li>
+                            <li>150 Minutes</li>
+                        </ul>
+                        <button class="btn btn-primary full-width open-modal">Start Test</button>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- WARNING MODAL -->
+    <div id="warning-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>⚠️ Exam Conditions Warning</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>This test simulates the real exam environment.</p>
+                <ul>
+                    <li>The timer <strong>cannot be paused</strong>.</li>
+                    <li>Leaving the window may auto-submit your test.</li>
+                    <li>Ensure you have a stable internet connection.</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary close-modal">Cancel</button>
+                <button class="btn btn-primary">I am Ready</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Same Footer as Home -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 NDA Prep Platform. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="auth.js"></script>
+    <script src="db.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

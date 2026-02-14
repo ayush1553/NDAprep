@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NDA 1 2026 - Sign Up</title>
+    <link rel="stylesheet" href="signup.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="signup-container">
+
+        <div class="signup-card">
+            <h1>Create Account</h1>
+            <p class="subtitle">Join the mission for NDA 1 2026</p>
+
+            <form id="signup-form" onsubmit="handleSignup(event)">
+
+                <div class="input-group">
+                    <label>Full Name</label>
+                    <input type="text" id="name" placeholder="e.g. Rahul Sharma" required autofocus>
+                </div>
+
+                <div class="input-group">
+                    <label>Email Address</label>
+                    <input type="email" id="email" placeholder="name@example.com" required>
+                </div>
+
+                <div class="input-group password-group">
+                    <label>Password</label>
+                    <input type="password" id="password" placeholder="Min. 8 characters" required>
+                    <i class="fa-solid fa-eye" id="togglePassword"></i>
+                </div>
+
+                <button type="submit" id="btn-submit" class="btn-primary">
+                    <span id="btn-text">Initialize Access</span>
+                </button>
+
+                <div id="error-box" class="error-msg"></div>
+
+                <div class="divider">Secure sign up with</div>
+
+                <div class="social-login">
+                    <button type="button" class="btn-outline">
+                        <i class="fa-brands fa-google"></i> Google
+                    </button>
+                    <button type="button" class="btn-outline">
+                        <i class="fa-brands fa-apple"></i> Apple
+                    </button>
+                </div>
+
+                <div class="bottom-links">
+                    <a href="login.html">Already have an account? <strong>Sign In</strong></a>
+                    <a href="#">Security & Privacy Terms</a>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+
+    <script src="auth.js"></script>
+    <script>
+        const togglePassword = document.querySelector('#togglePassword');
+        const passwordInput = document.querySelector('#password');
+        const emailInput = document.getElementById('email');
+
+        // Pre-fill email and get redirect URL from parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const prefilledEmail = urlParams.get('email');
+        const redirectUrl = urlParams.get('redirect') || 'index.html';
+
+        if (prefilledEmail) {
+            emailInput.value = prefilledEmail;
+        }
+
+        togglePassword.addEventListener('click', function (e) {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.classList.toggle('fa-eye-slash');
+        });
+
+        async function handleSignup(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btn-submit');
+            const btnText = document.getElementById('btn-text');
+            const errorBox = document.getElementById('error-box');
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            errorBox.style.display = 'none';
+            btnText.innerHTML = '<div class="loader"></div> Processing...';
+            btn.disabled = true;
+
+            try {
+                await Auth.signup(email, password, name);
+                window.location.href = redirectUrl;
+            } catch (err) {
+                errorBox.textContent = err.message;
+                errorBox.style.display = 'block';
+                btnText.textContent = 'Initialize Access';
+                btn.disabled = false;
+            }
+        }
+    </script>
+
+</body>
+
+</html>

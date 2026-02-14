@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NDAPrep - Mock Tests</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* ================= GLOBAL ================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background: linear-gradient(135deg,#0f172a,#1e3a8a 40%,#2563eb);
+    color:white;
+    padding-top:70px;
+    overflow-x:hidden;
+}
+
+/* ================= NAVBAR ================= */
+
+.navbar{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:70px;
+    background:linear-gradient(90deg,#0f1c3f,#08142e);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 20px;
+    z-index:1000;
+}
+
+.nav-left{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo-circle{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    overflow:hidden;
+}
+
+.logo-circle img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.nav-title{
+    font-size:20px;
+    font-weight:600;
+}
+
+.menu-btn{
+    width:42px;
+    height:42px;
+    background:#1e2d5a;
+    border:none;
+    border-radius:12px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:5px;
+    cursor:pointer;
+}
+
+.menu-btn span{
+    width:20px;
+    height:2px;
+    background:white;
+}
+
+/* ================= SIDEBAR ================= */
+
+.sidebar{
+    position:fixed;
+    top:0;
+    right:-260px;
+    width:240px;
+    height:100vh;
+    background:linear-gradient(180deg,#0f1c3f,#08142e);
+    padding-top:80px;
+    transition:0.3s ease;
+    z-index:1100;
+}
+
+.sidebar.active{
+    right:0;
+}
+
+.sidebar a{
+    display:block;
+    padding:15px 25px;
+    color:white;
+    text-decoration:none;
+    opacity:0.85;
+    transition:0.2s;
+}
+
+.sidebar a:hover{
+    opacity:1;
+    background:rgba(255,255,255,0.08);
+}
+
+.overlay{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.5);
+    opacity:0;
+    visibility:hidden;
+    transition:0.3s;
+    z-index:1050;
+}
+
+.overlay.active{
+    opacity:1;
+    visibility:visible;
+}
+
+/* ================= CONTAINER ================= */
+
+.container{
+    padding:30px 20px;
+    max-width:1100px;
+    margin:auto;
+}
+
+
+
+/* ================= SUBJECT TABS ================= */
+
+.subject-tabs{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:18px;
+    margin-bottom:40px;
+}
+
+/* SUBJECT CARD */
+
+.subject-card{
+    width:190px;
+    height:80px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+
+    padding:14px 18px;
+
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(15px);
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,0.12);
+
+    cursor:pointer;
+    transition:0.25s ease;
+    position:relative;
+
+    flex-shrink:0;      /* prevent collapsing */
+}
+
+/* TEXT */
+
+.subject-card h3{
+    font-size:15px;
+    font-weight:600;
+    margin-bottom:4px;
+}
+
+.subject-card p{
+    font-size:13px;
+    opacity:0.8;
+}
+
+/* ACTIVE STATE */
+
+.subject-card.active{
+    background:linear-gradient(135deg,#3b82f6,#2563eb);
+}
+
+/* ACTIVE POINTER */
+
+.subject-card.active::after{
+    content:'';
+    position:absolute;
+    bottom:-8px;
+    left:50%;
+    transform:translateX(-50%);
+    border-left:8px solid transparent;
+    border-right:8px solid transparent;
+    border-top:8px solid #2563eb;
+}
+
+/* ================= MOBILE BEHAVIOR ================= */
+
+@media (max-width: 480px){
+
+    .subject-tabs{
+        justify-content:center;
+        gap:14px;
+    }
+
+    .subject-card{
+        width:160px;
+        height:72px;
+        padding:12px 14px;
+    }
+
+}
+
+
+
+
+
+/* ================= TEST CARDS ================= */
+
+.test-list{
+    display:flex;
+    flex-direction:column;
+    gap:25px;
+}
+
+.test-card{
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(15px);
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:16px;
+    overflow:hidden;
+}
+
+
+/* Main content section */
+.card-main{
+    padding:18px 22px;
+}
+
+/* Title row only uses flex */
+.title-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+}
+
+.meta-row{
+    margin-top:8px;
+    font-size:14px;
+    opacity:0.8;
+}
+
+.card-footer{
+    padding:14px 22px;
+
+    border-top:1px solid rgba(255,255,255,0.08);
+
+    background:rgba(255,255,255,0.04);   /* subtle dull layer */
+
+    font-size:13px;
+    opacity:0.75;                        /* make text softer */
+}
+
+
+.start-link{
+    white-space:nowrap;
+    flex-shrink:0;
+
+    padding:6px 14px;
+    border-radius:999px;              /* fully circular edges */
+    border:1px solid rgba(255,255,255,0.25);
+
+    font-size:13px;
+    font-weight:500;
+    cursor:pointer;
+
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+
+    transition:0.2s ease;
+}
+.start-link:hover{
+    background:rgba(255,255,255,0.12);
+}
+
+
+
+
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:600px){
+
+    /* KEEP SUBJECT TABS HORIZONTAL */
+    .subject-tabs{
+        justify-content:center;
+        gap:14px;
+    }
+
+    
+
+}
+
+
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-left">
+        <div class="logo-circle">
+            <img src="nda_logo.jpeg" alt="logo">
+        </div>
+        <div class="nav-title">NDAPrep</div>
+    </div>
+
+    <button class="menu-btn" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+</nav>
+
+<div class="sidebar" id="sidebar">
+    <a href="#">Home</a>
+    <a href="#">Mock Tests</a>
+    <a href="#">Previous Year Papers</a>
+    <a href="#">Chapter Tests</a>
+    <a href="#">Performance Analysis</a>
+    <a href="#">Logout</a>
+</div>
+
+<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+<div class="container">
+
+    <!-- SUBJECT TABS -->
+    <div class="subject-tabs">
+        <div class="subject-card active">
+            <h3>Mathematics</h3>
+            <p>13 Tests</p>
+        </div>
+
+        <div class="subject-card">
+            <h3>General Ability</h3>
+            <p>10 Tests</p>
+        </div>
+    </div>
+
+    <!-- TEST LIST -->
+   <div class="test-list">
+
+    <!-- CARD 1 -->
+    <div class="test-card">
+        <div class="card-main">
+            <div class="title-row">
+                <div class="test-title">
+                    UPSC NDA 01/2026 FT 1: Mathematics
+                </div>
+                <div class="start-link">
+                    Start Test
+                </div>
+            </div>
+
+            <div class="meta-row">
+                120 Qs · 150 mins · 300 Marks
+            </div>
+        </div>
+
+        <div class="card-footer">
+            Syllabus · English · Hindi
+        </div>
+    </div>
+
+    <!-- CARD 2 -->
+    <div class="test-card">
+        <div class="card-main">
+            <div class="title-row">
+                <div class="test-title">
+                    UPSC NDA 01/2026 FT 2: Mathematics
+                </div>
+                <div class="start-link">
+                    Start Test
+                </div>
+            </div>
+
+            <div class="meta-row">
+                120 Qs · 150 mins · 300 Marks
+            </div>
+        </div>
+
+        <div class="card-footer">
+            Syllabus · English · Hindi
+        </div>
+    </div>
+
+    <!-- CARD 3 -->
+    <div class="test-card">
+        <div class="card-main">
+            <div class="title-row">
+                <div class="test-title">
+                    UPSC NDA 01/2026 FT 3: Mathematics
+                </div>
+                <div class="start-link">
+                    Start Test
+                </div>
+            </div>
+
+            <div class="meta-row">
+                120 Qs · 150 mins · 300 Marks
+            </div>
+        </div>
+
+        <div class="card-footer">
+            Syllabus · English · Hindi
+        </div>
+    </div>
+
+</div>
+
+
+</div>
+
+<script>
+function toggleMenu(){
+    document.getElementById("sidebar").classList.toggle("active");
+    document.getElementById("overlay").classList.toggle("active");
+}
+</script>
+
+</body>
+</html>

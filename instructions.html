@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Instructions - NDA Prep</title>
+    <meta name="description" content="Read instructions carefully before starting the NDA PYQ Exam.">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="pyq.css">
+    <link rel="stylesheet" href="instructions.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+        <div class="brand">
+            <div class="logo"><img src="nda_logo.jpeg" alt="NDA"></div>
+            <span>NDAPrep</span>
+        </div>
+        <div class="menu" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></div>
+    </header>
+
+    <!-- NAVIGATION MENU -->
+    <div class="nav-overlay" id="navOverlay">
+        <div class="nav-content">
+            <div class="nav-header">
+                <span class="nav-title">Menu</span>
+                <span class="close-menu" onclick="toggleMenu()"><i class="fa-solid fa-xmark"></i></span>
+            </div>
+            <ul class="nav-links">
+                <!-- User Profile Section -->
+                <li id="user-display" style="display: none;">
+                    <i class="fa-solid fa-circle-user icon"></i>
+                </li>
+
+                <li><a href="index.html"><i class="fa-solid fa-house icon"></i> Home Page</a></li>
+                <li><a href="mock-tests.html"><i class="fa-solid fa-clipboard-list icon"></i> Mock Tests</a></li>
+                <li><a href="pyqs.html"><i class="fa-solid fa-file-lines icon"></i> Previous Year Papers</a></li>
+                <li><a href="chapter_tests.html"><i class="fa-solid fa-book-open icon"></i> Chapter Tests</a></li>
+                <li><a href="performance.html"><i class="fa-solid fa-chart-simple icon"></i> Performance Analysis</a>
+                </li>
+
+                <li id="login-link"><a href="login.html"><i class="fa-solid fa-right-to-bracket icon"></i> Login</a>
+                </li>
+                <li id="signup-link"><a href="signup.html"><i class="fa-solid fa-user-plus icon"></i> Sign Up</a></li>
+                <li id="logout-link" style="display: none;"><a href="#" onclick="Auth.logout()"><i
+                            class="fa-solid fa-sign-out-alt icon"></i> Logout</a></li>
+
+                <li><a href="#"><i class="fa-solid fa-circle-info icon"></i> Update & Info</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <main class="instr-main">
+        <div class="exam-header-info">
+            <h2 id="exam-title-display">NDA-II 2025 (Mathematics) Official Paper</h2>
+            <p id="exam-date-display">(Held On: 14 Sept, 2025)</p>
+        </div>
+
+        <div class="exam-stats-row">
+            <span>Duration: <span id="disp-duration">150</span> Mins.</span>
+            <span>Maximum Marks: <span id="disp-marks">300.0</span></span>
+        </div>
+
+        <div class="instructions-content">
+            <ul class="instr-list">
+                <li>The test contain <span id="disp-questions">120</span> total questions.</li>
+                <li>Each question has 4 options out of which only one is correct.</li>
+                <li>You have to finish the test in <span id="disp-duration-alt">150</span> minutes.</li>
+                <li>There is negative marking in this test.</li>
+                <li>You will be awarded <span id="disp-correct-marks">2.5</span> marks for each correct answer and 1/3
+                    of allotted marks will be deducted for the wrong answer.</li>
+                <li>There is no negative marking for the questions that you have not attempted.</li>
+                <li>You can write this test only once. Make sure that you complete the test before you submit the test
+                    and/or close the browser.</li>
+                <li>I have read all the instructions carefully and have understood them. I agree not to cheat or use
+                    unfair means in this examination. I understand that using unfair means of any sort for my own or
+                    someone else's advantage will lead to my immediate disqualification. The decision of NDAPrep.com
+                    will be final in these matters and cannot be appealed.</li>
+            </ul>
+        </div>
+
+        <div class="bottom-controls">
+            <div class="lang-selector">
+                <select id="default-language">
+                    <option value="" disabled selected>Choose your Default Language</option>
+                    <option value="english">English</option>
+                    <option value="hindi">Hindi</option>
+                </select>
+                <div class="select-arrow">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 9l6 6 6-6"></path>
+                    </svg>
+                </div>
+            </div>
+
+            <button id="btn-start" onclick="startExam()" class="btn-agree-continue">Agree and Continue</button>
+        </div>
+    </main>
+
+
+
+    <script src="auth.js"></script>
+    <script src="db.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Extract URL params
+        const urlParams = new URLSearchParams(window.location.search);
+        const type = urlParams.get('type') || 'PYQ';
+        const subject = urlParams.get('subject') || 'Mathematics';
+        const year = urlParams.get('year') || '2022';
+        const session = urlParams.get('session') || '2';
+        const chapterSlug = urlParams.get('chapter');
+        const mockSlug = urlParams.get('slug');
+
+        // Update UI
+        if (type === 'ChapterTest') {
+            // Chapter Test UI logic
+            const formattedChapter = chapterSlug ? chapterSlug.split('_').slice(1).map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') : 'Chapter Test';
+            document.getElementById('exam-title-display').textContent = `${formattedChapter} (Chapter Test)`;
+            document.getElementById('exam-date-display').textContent = `Subject: ${subject}`;
+
+            // Dynamic Rules for Chapter Test
+            // Fixed: 10 Qs. 
+            // Marks: MAT = 2.5/qn, GAT = 4.0/qn
+            // Total: MAT = 25, GAT = 40
+            document.getElementById('disp-questions').textContent = '10';
+
+            if (subject === 'Mathematics') {
+                document.getElementById('disp-marks').textContent = '25.0';
+                document.getElementById('disp-correct-marks').textContent = '2.5';
+            } else {
+                // GAT (Physics, Chemistry, English, etc.)
+                document.getElementById('disp-marks').textContent = '40.0';
+                document.getElementById('disp-correct-marks').textContent = '4.0';
+            }
+
+            document.getElementById('disp-duration').textContent = '13';
+            document.getElementById('disp-duration-alt').textContent = '13';
+
+        } else if (type === 'Mock') {
+            // Mock Test UI logic
+            const formattedSlug = mockSlug ? mockSlug.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') : 'Full Mock Test';
+            document.getElementById('exam-title-display').textContent = `UPSC NDA ${formattedSlug}`;
+            document.getElementById('exam-date-display').textContent = `Full Length Mock Test (${subject})`;
+
+            if (subject === 'GAT') {
+                document.getElementById('disp-questions').textContent = '150';
+                document.getElementById('disp-marks').textContent = '600.0';
+                document.getElementById('disp-duration').textContent = '150';
+                document.getElementById('disp-duration-alt').textContent = '150';
+                document.getElementById('disp-correct-marks').textContent = '4.0';
+            } else {
+                document.getElementById('disp-questions').textContent = '120';
+                document.getElementById('disp-marks').textContent = '300.0';
+                document.getElementById('disp-duration').textContent = '150';
+                document.getElementById('disp-duration-alt').textContent = '150';
+                document.getElementById('disp-correct-marks').textContent = '2.5';
+            }
+        } else {
+            // PYQ UI logic (Existing)
+            const sessions = { '1': { 'roman': 'I', 'date': '13 Apr' }, '2': { 'roman': 'II', 'date': '14 Sept' } };
+            const sessionInfo = sessions[session];
+            const displaySubject = subject === 'Mathematics' ? 'Mathematics' : 'GAT';
+
+            document.getElementById('exam-title-display').textContent = `NDA-${sessionInfo.roman} ${year} (${displaySubject}) Official Paper`;
+            document.getElementById('exam-date-display').textContent = `(Held On: ${sessionInfo.date}, ${year})`;
+
+            // Dynamic Rules based on Subject
+            if (displaySubject === 'GAT' || subject.includes('GAT')) {
+                document.getElementById('disp-questions').textContent = '150';
+                document.getElementById('disp-marks').textContent = '600.0';
+                document.getElementById('disp-duration').textContent = '150';
+                document.getElementById('disp-duration-alt').textContent = '150';
+                document.getElementById('disp-correct-marks').textContent = '4.0';
+            } else {
+                // Default Math
+                document.getElementById('disp-questions').textContent = '120';
+                document.getElementById('disp-marks').textContent = '300.0';
+                document.getElementById('disp-duration').textContent = '150';
+                document.getElementById('disp-duration-alt').textContent = '150';
+                document.getElementById('disp-correct-marks').textContent = '2.5';
+            }
+        }
+
+        function startExam() {
+            let targetUrl = `exam.html?subject=${encodeURIComponent(subject)}&year=${year}&session=${session}`;
+            if (type === 'ChapterTest') {
+                targetUrl = `exam.html?type=ChapterTest&subject=${encodeURIComponent(subject)}&chapter=${chapterSlug}`;
+            } else if (type === 'Mock') {
+                targetUrl = `exam.html?type=Mock&subject=${encodeURIComponent(subject)}&slug=${mockSlug}`;
+            }
+            window.location.href = targetUrl;
+        }
+    </script>
+</body>
+
+</html>

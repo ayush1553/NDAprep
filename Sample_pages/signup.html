@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NDA 1 2026 - Sign Up</title>
+  <link rel="stylesheet" href="signup.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+  <div class="signup-container">
+
+    <div class="signup-card">
+      <h1>Create Account</h1>
+      <p class="subtitle">Join the mission for NDA 1 2026</p>
+
+      <form onsubmit="event.preventDefault()">
+
+        <div class="input-group">
+          <label>Full Name</label>
+          <input type="text" placeholder="e.g. Rahul Sharma" required>
+        </div>
+
+        <div class="input-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="name@example.com" required>
+        </div>
+
+        <div class="input-group password-group">
+          <label>Password</label>
+          <input type="password" id="password" placeholder="Min. 8 characters" required>
+          <i class="fa-solid fa-eye" id="togglePassword"></i>
+        </div>
+
+        <button type="submit" class="btn-primary">Initialize Access</button>
+
+        <div class="divider">Secure sign up with</div>
+
+        <div class="social-login">
+          <button type="button" class="btn-outline">
+            <i class="fa-brands fa-google"></i> Google
+          </button>
+          <button type="button" class="btn-outline">
+            <i class="fa-brands fa-apple"></i> Apple
+          </button>
+        </div>
+
+        <div class="bottom-links">
+          <a href="#">Already have an account? <strong>Sign In</strong></a>
+          <a href="#">Security & Privacy Terms</a>
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+
+  <script>
+    const togglePassword = document.querySelector('#togglePassword');
+    const password = document.querySelector('#password');
+
+    togglePassword.addEventListener('click', function (e) {
+      const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+      password.setAttribute('type', type);
+      this.classList.toggle('fa-eye-slash');
+    });
+  </script>
+
+</body>
+
+</html>

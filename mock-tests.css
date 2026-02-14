@@ -1,0 +1,294 @@
+/* ================= MOCK TESTS PAGE - MODERN UI/UX ================= */
+
+/* ================= GLOBAL ================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #0f172a, #1e3a8a 40%, #2563eb);
+    color: white;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+/* ================= CONTAINER ================= */
+
+.container {
+    padding: 30px 20px;
+    max-width: 1100px;
+    margin: auto;
+}
+
+/* ================= SUBJECT TABS ================= */
+
+.subject-tabs {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 40px;
+}
+
+/* SUBJECT CARD */
+
+.subject-card {
+    width: 190px;
+    height: 80px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding: 14px 18px;
+
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(15px);
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+
+    cursor: pointer;
+    transition: 0.25s ease;
+    position: relative;
+
+    flex-shrink: 0;
+    /* prevent collapsing */
+}
+
+/* TEXT */
+
+.subject-card h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.subject-card p {
+    font-size: 13px;
+    opacity: 0.8;
+}
+
+/* ACTIVE STATE */
+
+.subject-card.active {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+/* ACTIVE POINTER */
+
+.subject-card.active::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid #2563eb;
+}
+
+/* ================= MOBILE BEHAVIOR ================= */
+
+@media (max-width: 480px) {
+
+    .subject-tabs {
+        justify-content: center;
+        gap: 14px;
+    }
+
+    .subject-card {
+        width: 160px;
+        height: 72px;
+        padding: 12px 14px;
+    }
+
+}
+
+/* ================= TEST CARDS ================= */
+
+.test-list {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.mock-card,
+.test-card {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.2s ease;
+}
+
+.mock-card:hover,
+.test-card:hover {
+    transform: translateY(-2px);
+}
+
+/* Main content section */
+.card-content,
+.card-main {
+    padding: 18px 22px;
+}
+
+/* Title row only uses flex */
+.title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.card-title,
+.test-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    margin: 0;
+    flex: 1;
+    line-height: 1.3;
+}
+
+.meta-row,
+.card-meta-row {
+    margin-top: 8px;
+    font-size: 14px;
+    opacity: 0.8;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-meta {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.card-footer,
+.card-bottom-strip {
+    padding: 14px 22px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+    background: rgba(255, 255, 255, 0.06);
+    /* slightly lighter for visibility */
+
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.85);
+    /* brighter text for better contrast */
+}
+
+.start-link,
+.card-cta-btn {
+    white-space: nowrap;
+    flex-shrink: 0;
+
+    padding: 6px 14px;
+    border-radius: 999px;
+    /* fully circular edges */
+    border: 1px solid rgba(255, 255, 255, 0.25);
+
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: 0.2s ease;
+    text-decoration: none;
+    color: white;
+}
+
+.start-link:hover,
+.card-cta-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+/* Coming Soon Styling */
+.mock-card.coming-soon {
+    opacity: 0.6;
+}
+
+.coming-soon-badge {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.syllabus-link {
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 400;
+}
+
+.attempt-info {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.reattempt-link {
+    color: white;
+    font-weight: 600;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Progress Bar */
+.progress-container {
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    margin: 12px 0;
+    position: relative;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: rgba(59, 130, 246, 0.5);
+    border-radius: 2px;
+}
+
+.progress-thumb {
+    width: 6px;
+    height: 8px;
+    background-color: #3b82f6;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 1px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width: 600px) {
+
+    /* KEEP SUBJECT TABS HORIZONTAL */
+    .subject-tabs {
+        justify-content: center;
+        gap: 14px;
+    }
+
+    .container {
+        padding: 20px 16px;
+    }
+
+}
+
+/* Utilities */
+.hidden {
+    display: none;
+}

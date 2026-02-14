@@ -1,0 +1,5 @@
+// GAT Economy Chapter Test Data Placeholder
+const chapterTestData = {
+    title: "Economy Chapter Test",
+    questions: []
+};

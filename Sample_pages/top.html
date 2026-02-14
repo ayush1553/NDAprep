@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NDA Prep | Home</title>
+  <link rel="stylesheet" href="top.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo"><img src="nda_logo.jpeg" alt="NDA"></div>
+      <span>NDA Preparation</span>
+    </div>
+    <div class="menu" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></div>
+  </header>
+
+  <!-- NAVIGATION MENU -->
+  <div class="nav-overlay" id="navOverlay">
+    <div class="nav-content">
+      <div class="nav-header">
+        <span class="nav-title">Menu</span>
+        <span class="close-menu" onclick="toggleMenu()"><i class="fa-solid fa-xmark"></i></span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="top.html"><i class="fa-solid fa-house icon"></i> Home Page</a></li>
+        <li><a href="mock-tests.html"><i class="fa-solid fa-clipboard-list icon"></i> Mock Tests</a></li>
+        <li><a href="pyqs.html"><i class="fa-solid fa-file-lines icon"></i> Previous Year Papers</a></li>
+        <li><a href="chapter_tests.html"><i class="fa-solid fa-book-open icon"></i> Chapter Tests</a></li>
+        <li><a href="performance.html"><i class="fa-solid fa-chart-simple icon"></i> Performance Analysis</a></li>
+        <li><a href="#"><i class="fa-solid fa-circle-info icon"></i> Update & Info</a></li>
+      </ul>
+      <div class="nav-footer">
+        <button class="login-btn">Login</button>
+      </div>
+    </div>
+  </div>
+
+
+  <section class="hero">
+    <div class="hero-atmosphere"></div>
+
+    <div class="hero-content">
+      <h1>Welcome, Cadet</h1>
+      <p>Preparation is not optional. It is duty.</p>
+
+      <div class="hero-motto">
+        Discipline · Focus · Destiny
+
+      </div>
+      <div class="hero-motto">
+        YOUR FUTURE IS SHAPED BY
+        WHAT YOU DO TODAY. STUDY
+        HARD, STAY FOCUSED, AND LET
+        YOUR EFFORTS TURN INTO
+        ACHIEVEMENTS.
+      </div>
+    </div>
+
+    <div class="hero-motion">
+      <span></span><span></span><span></span>
+    </div>
+  </section>
+
+  <!-- MISSION CARD -->
+  <section class="today today--hero">
+    <div class="today-card">
+      <div class="today-left">
+        <small class="label">TODAY’S MISSION</small>
+        <h1>NDA 1 · 2026</h1>
+        <p>7 days remaining · 12 April 2026</p>
+      </div>
+
+      <div class="today-right">
+        <button class="execute">Start Practice</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACTION GRID -->
+  <section class="features">
+    <div class="card">
+      <span class="badge">TODAY</span>
+
+      <div class="icon">📋</div>
+      <h3>Mock Tests</h3>
+      <p>Full-length exam simulations under real pressure</p>
+      <span class="hint">Train like the real day</span>
+    </div>
+
+    <div class="card">
+      <div class="icon">📄</div>
+      <h3>Previous Year Papers</h3>
+      <p>Actual NDA papers with detailed solutions</p>
+      <span class="hint">Understand the battlefield</span>
+    </div>
+
+    <div class="card">
+      <div class="icon">📘</div>
+      <h3>Chapter-wise Tests</h3>
+      <p>Topic-focused tests to fix weak areas</p>
+      <span class="hint">Strengthen fundamentals</span>
+    </div>
+
+    <div class="card">
+      <div class="icon">✏️</div>
+      <h3>Revision Notes</h3>
+      <p>Concise notes for fast, effective recall</p>
+      <span class="hint">Revise with precision</span>
+    </div>
+  </section>
+
+  <!-- PERFORMANCE -->
+  <section class="performance">
+    <h2>Performance Analysis</h2>
+    <button class="primary">View Report</button>
+  </section>
+
+  <!-- UPCOMING -->
+  <section class="upcoming">
+    <h2>Upcoming Test</h2>
+
+    <div class="upcoming-card">
+      <div>
+        <strong>NDA Mock Test 1</strong>
+        <span>Starts in 2 days</span>
+      </div>
+      <button class="secondary">Start</button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <h3>NDAprep.</h3>
+    <p>Serious preparation for serious aspirants.</p>
+
+    <div class="footer-cols">
+      <div>
+        <strong>Platform</strong>
+        <a>About</a>
+        <a>Contact</a>
+        <a>Privacy Policy</a>
+      </div>
+      <div>
+        <strong>Resources</strong>
+        <a>Notes</a>
+        <a>Mock Tests</a>
+        <a>Disclaimer</a>
+      </div>
+    </div>
+
+    <small>© 2026 NDA Prep Platform</small>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      const overlay = document.getElementById('navOverlay');
+      overlay.classList.toggle('active');
+
+      // Prevent scrolling when menu is open
+      if (overlay.classList.contains('active')) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
+    }
+
+    // Close menu when clicking outside
+    document.getElementById('navOverlay').addEventListener('click', function (e) {
+      if (e.target === this) {
+        toggleMenu();
+      }
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,5 @@
+// GAT English Chapter Test Data Placeholder
+const chapterTestData = {
+    title: "English Chapter Test",
+    questions: []
+};
