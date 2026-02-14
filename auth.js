@@ -4,7 +4,7 @@
  */
 
 const AUTH_CONFIG = {
-    API_URL: 'http://localhost:3000/api',
+    API_URL: '/api',
     SESSION_KEY: 'nda_platform_session'
 };
 
