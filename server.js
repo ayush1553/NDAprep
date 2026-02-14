@@ -12,16 +12,34 @@ const PORT = process.env.PORT || 3000;
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
 
-if (!supabaseUrl || !supabaseKey) {
-    console.warn('Supabase credentials missing. Ensure SUPABASE_URL and SUPABASE_KEY are set.');
+let supabase;
+if (supabaseUrl && supabaseKey) {
+    supabase = createClient(supabaseUrl, supabaseKey);
+} else {
+    console.error('CRITICAL: Supabase credentials missing. Ensure SUPABASE_URL and SUPABASE_KEY are set in Environment Variables.');
 }
 
-const supabase = createClient(supabaseUrl, supabaseKey);
+// Middleware to ensure Supabase is configured
+const checkConfig = (req, res, next) => {
+    if (!supabase) {
+        return res.status(500).json({
+            error: 'Server configuration error: Supabase credentials missing.',
+            details: 'Please set SUPABASE_URL and SUPABASE_KEY in Vercel Project Settings.'
+        });
+    }
+    next();
+};
 
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, './')));
+// Static files handled by Vercel in production, only needed for local dev
+if (require.main === module) {
+    app.use(express.static(path.join(__dirname, './')));
+}
+
+// Apply config check to all API routes
+app.use('/api', checkConfig);
 
 // --- AUTH API ---
 
